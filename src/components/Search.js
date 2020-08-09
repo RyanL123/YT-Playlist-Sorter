@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, MenuItem, Button } from "@material-ui/core";
+import { Box, TextField, MenuItem, Button, Link } from "@material-ui/core";
 
 class Search extends React.Component {
     render() {
@@ -40,14 +40,26 @@ class Search extends React.Component {
                             ))}
                         </TextField>
                     </Box>
-                    <Box mt="20px">
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            onClick={this.props.search}
-                        >
-                            Search
-                        </Button>
+                    <Box mt="20px" display="flex" flexDirection="row">
+                        <Box mx="5px">
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                onClick={this.props.search}
+                            >
+                                Search
+                            </Button>
+                        </Box>
+                        <Box mx="5px">
+                            <Button
+                                variant="outlined"
+                                color="default"
+                                href="https://github.com/RyanL123/YT-Playlist-Sorter/blob/master/README.md"
+                                target="_blank"
+                            >
+                                Tutorial
+                            </Button>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
