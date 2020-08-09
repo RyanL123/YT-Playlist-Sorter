@@ -1,2 +1,2 @@
-const api_key = "AIzaSyD-3Gn8sOk3aSHj8ewoBToXzotxpqxwWfM";
+const api_key = "AIzaSyAy1iTC5CwtXje1OQOSlOQLGYYVC_2he3c";
 export default api_key;
