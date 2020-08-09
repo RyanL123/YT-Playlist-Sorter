@@ -23,7 +23,7 @@ export const convertISOtoString = (ISODate) => {
 export const convertISOtoInt = (ISODate) => {
     var date = new Date(ISODate);
     return (
-        parseInt(date.getFullYear()) * 1000 +
+        parseInt(date.getFullYear()) * 10000 +
         (parseInt(date.getMonth()) + 1) * 100 +
         parseInt(date.getDate())
     );

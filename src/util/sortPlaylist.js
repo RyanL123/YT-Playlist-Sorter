@@ -26,14 +26,14 @@ function sortPlaylist(videos, order) {
         ret.sort(function comp(a, b) {
             return b.stats.dislikes - a.stats.dislikes;
         });
-    } else if (order == "ud") {
+    } else if (order == "ua") {
         ret.sort(function comp(a, b) {
             return (
                 convertISOtoInt(a.stats.uploadDate) -
                 convertISOtoInt(b.stats.uploadDate)
             );
         });
-    } else if (order == "ua") {
+    } else if (order == "ud") {
         ret.sort(function comp(a, b) {
             return (
                 convertISOtoInt(b.stats.uploadDate) -
