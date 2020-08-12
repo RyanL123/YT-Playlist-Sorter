@@ -45,7 +45,7 @@ export default function Video(props) {
             <Box>
                 <img
                     src={props.stats.thumbnail}
-                    style={{ width: "100%", height: "auto" }}
+                    style={{ width: mobile ? "100%" : "300px", height: "auto" }}
                 />
             </Box>
         </Box>
