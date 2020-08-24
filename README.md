@@ -4,12 +4,9 @@ You can find the sorter [here](https://playlist-view-sorter.firebaseapp.com/)
 
 Sort any YouTube playlist based on selected attributes. The playlist does not have to necessarily be your own. **Because of API limits, only the first 25 videos can be retrieved from the playlist.**
 
-# Requirements
-
--   Javascript must be enabled
--   The playlist must be public
-
 # Usage
+
+**Note: The playlist must be public**
 
 1. Find the ID of the playlist you wish to sort on YouTube
 
@@ -24,3 +21,7 @@ Sort any YouTube playlist based on selected attributes. The playlist does not ha
 4. Profit
 
 5. Select a sorting option (Default sorted by most views)
+
+# Why YouTube?
+
+I had the idea for this project while browsing YouTube for game OSTs and wanted to listen to the most popular songs in a playlist. These playlists were often huge and very time consuming to navigate. While YouTube itself did not possess the ability to sort playlists, its API did.
