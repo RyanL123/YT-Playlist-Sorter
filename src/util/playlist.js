@@ -10,7 +10,7 @@ function getJSON(url) {
 
 function getPlaylist(ID) {
     var playlist = getJSON(
-        "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=25&playlistId=" +
+        "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=" +
             ID +
             "&key=" +
             api_key

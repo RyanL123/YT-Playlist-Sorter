@@ -2,7 +2,7 @@
 
 You can find the sorter [here](https://playlist-view-sorter.firebaseapp.com/)
 
-Sort any YouTube playlist based on selected attributes. The playlist does not have to necessarily be your own. **Because of API limits, only the first 25 videos can be retrieved from the playlist.**
+Sort any YouTube playlist based on selected attributes. The playlist does not have to necessarily be your own. **Because of API limits, only the first 50 videos can be retrieved from the playlist.**
 
 # Usage
 
@@ -12,7 +12,7 @@ Sort any YouTube playlist based on selected attributes. The playlist does not ha
 
 ![Get playlist ID](src/assets/playlistID.png)
 
-> In this case, the ID would be **PLqqbIIJ0YzpQZjvg_RPd0hX-nqloV8rmS**
+> In this case, the ID would be **PLCsOwPldZgDQeDUrzaCeZIcA7Wpi5UWgJ**
 
 2. Click search
 
