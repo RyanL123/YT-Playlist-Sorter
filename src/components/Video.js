@@ -33,12 +33,6 @@ export default function Video(props) {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </Typography>
                 <Typography variant="h6">
-                    Dislikes:{" "}
-                    {props.stats.dislikes
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </Typography>
-                <Typography variant="h6">
                     Upload Date: {convertISOtoString(props.stats.uploadDate)}
                 </Typography>
             </Box>

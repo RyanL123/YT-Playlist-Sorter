@@ -36,20 +36,23 @@ function generatePlaylist(ID, order) {
         const vid = playlist.items[i];
         var videoID = vid.snippet.resourceId.videoId;
         var video = JSON.parse(getVideoStats(videoID)).items[0];
-        videos.push({
-            stats: {
-                views: parseInt(video.statistics.viewCount),
-                likes: video.statistics.likeCount,
-                dislikes: video.statistics.dislikeCount,
-                uploadDate: video.snippet.publishedAt,
-                channel: video.snippet.channelTitle,
-                title: playlist.items[i].snippet.title,
-                thumbnail: playlist.items[i].snippet.thumbnails.medium.url,
-                link:
-                    "https://www.youtube.com/watch?v=" +
-                    playlist.items[i].snippet.resourceId.videoId,
-            },
-        });
+        // make sure video isnt private or removed
+        if (video) {
+            videos.push({
+                stats: {
+                    views: parseInt(video.statistics.viewCount),
+                    likes: video.statistics.likeCount,
+                    dislikes: video.statistics.dislikeCount,
+                    uploadDate: video.snippet.publishedAt,
+                    channel: video.snippet.channelTitle,
+                    title: playlist.items[i].snippet.title,
+                    thumbnail: playlist.items[i].snippet.thumbnails.medium.url,
+                    link:
+                        "https://www.youtube.com/watch?v=" +
+                        playlist.items[i].snippet.resourceId.videoId,
+                },
+            });
+        }
     }
     videos = sortPlaylist(videos, order);
     return videos;

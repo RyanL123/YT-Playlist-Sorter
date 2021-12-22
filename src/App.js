@@ -30,14 +30,6 @@ class App extends React.Component {
                     label: "Likes Ascending",
                 },
                 {
-                    value: "dd",
-                    label: "Dislikes Descending",
-                },
-                {
-                    value: "da",
-                    label: "Dislikes Ascending",
-                },
-                {
                     value: "ud",
                     label: "Most Recent",
                 },
