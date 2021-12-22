@@ -37,10 +37,15 @@ export default function Video(props) {
                 </Typography>
             </Box>
             <Box>
-                <img
-                    src={props.stats.thumbnail}
-                    style={{ width: mobile ? "100%" : "300px", height: "auto" }}
-                />
+                <Link href={props.stats.link} target="_blank">
+                    <img
+                        src={props.stats.thumbnail}
+                        style={{
+                            width: mobile ? "100%" : "300px",
+                            height: "auto",
+                        }}
+                    />
+                </Link>
             </Box>
         </Box>
     );

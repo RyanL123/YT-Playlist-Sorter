@@ -41,8 +41,9 @@ function generatePlaylist(ID, order) {
             videos.push({
                 stats: {
                     views: parseInt(video.statistics.viewCount),
-                    likes: video.statistics.likeCount,
-                    dislikes: video.statistics.dislikeCount,
+                    likes: video.statistics.likeCount
+                        ? video.statistics.likeCount
+                        : "Hidden",
                     uploadDate: video.snippet.publishedAt,
                     channel: video.snippet.channelTitle,
                     title: playlist.items[i].snippet.title,
