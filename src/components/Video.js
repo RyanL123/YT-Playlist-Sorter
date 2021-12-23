@@ -44,6 +44,7 @@ export default function Video(props) {
                             width: mobile ? "100%" : "300px",
                             height: "auto",
                         }}
+                        alt={props.stats.title}
                     />
                 </Link>
             </Box>

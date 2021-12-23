@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, MenuItem, Button, Link } from "@material-ui/core";
+import { Box, TextField, MenuItem, Button } from "@material-ui/core";
 
 class Search extends React.Component {
     render() {
