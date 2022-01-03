@@ -3,6 +3,10 @@ import Search from "./components/Search";
 import Results from "./components/Results";
 import generatePlaylist from "./util/playlist";
 import sortPlaylist from "./util/sortPlaylist";
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-LRVNS567ZT");
+ReactGA.send(window.location.pathname + window.location.search);
 
 class App extends React.Component {
     constructor() {
@@ -43,6 +47,13 @@ class App extends React.Component {
     }
     handleChange(event) {
         const { value, name } = event.target;
+        // Google Analytics
+        ReactGA.event({
+            category: "Search",
+            action: "Sort",
+            label: value,
+            value: 1,
+        });
         this.setState({
             [name]: [value],
         });
@@ -56,6 +67,12 @@ class App extends React.Component {
         });
     }
     getPlaylist() {
+        // Google Analytics
+        ReactGA.event({
+            category: "Search",
+            action: "Search",
+            value: 1,
+        });
         this.setState(
             {
                 loading: true,
