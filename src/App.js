@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
+import SEO from "./components/SEO";
 import Search from "./components/Search";
 import Results from "./components/Results";
 import Help from "./components/Help";
@@ -13,7 +14,6 @@ ReactGA.send(window.location.pathname + window.location.search);
 
 class App extends React.Component {
     constructor() {
-        super();
         this.state = {
             order: "vd",
             playlistID: "",
@@ -97,6 +97,7 @@ class App extends React.Component {
     render() {
         return (
             <Box backgroundColor="background.default" minHeight="100vh">
+                <SEO />
                 <BrowserRouter>
                     <Routes>
                         <Route
