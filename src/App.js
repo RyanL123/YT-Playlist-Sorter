@@ -58,7 +58,7 @@ class App extends React.Component {
             value: 1,
         });
         this.setState({
-            [name]: [value],
+            [name]: value,
         });
         this.setState((prevState) => {
             return {
