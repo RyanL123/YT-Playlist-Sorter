@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Box, TextField, MenuItem, Button } from "@material-ui/core";
 
 class Search extends React.Component {
@@ -54,8 +55,10 @@ class Search extends React.Component {
                             <Button
                                 variant="outlined"
                                 color="default"
-                                href="https://github.com/RyanL123/YT-Playlist-Sorter/blob/master/README.md"
                                 target="_blank"
+                                component={Link}
+                                to="/help"
+                                target=""
                             >
                                 Tutorial
                             </Button>

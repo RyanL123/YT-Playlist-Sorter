@@ -1,6 +1,8 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Search from "./components/Search";
 import Results from "./components/Results";
+import Help from "./components/Help";
 import generatePlaylist from "./util/playlist";
 import sortPlaylist from "./util/sortPlaylist";
 import ReactGA from "react-ga4";
@@ -92,19 +94,31 @@ class App extends React.Component {
     }
     render() {
         return (
-            <div>
-                <Search
-                    sortOptions={this.state.sortOptions}
-                    order={this.state.order}
-                    playlistID={this.state.playlistID}
-                    handleChange={(event) => this.handleChange(event)}
-                    search={() => this.getPlaylist()}
-                />
-                <Results
-                    loading={this.state.loading}
-                    videos={this.state.playlistItems}
-                />
-            </div>
+            <BrowserRouter>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <Search
+                                    sortOptions={this.state.sortOptions}
+                                    order={this.state.order}
+                                    playlistID={this.state.playlistID}
+                                    handleChange={(event) =>
+                                        this.handleChange(event)
+                                    }
+                                    search={() => this.getPlaylist()}
+                                />
+                                <Results
+                                    loading={this.state.loading}
+                                    videos={this.state.playlistItems}
+                                />
+                            </>
+                        }
+                    />
+                    <Route path="/help" element={<Help />} />
+                </Routes>
+            </BrowserRouter>
         );
     }
 }
