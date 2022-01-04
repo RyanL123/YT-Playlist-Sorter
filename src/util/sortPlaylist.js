@@ -18,14 +18,6 @@ function sortPlaylist(videos, order) {
         ret.sort(function comp(a, b) {
             return b.stats.likes - a.stats.likes;
         });
-    } else if (order === "da") {
-        ret.sort(function comp(a, b) {
-            return a.stats.dislikes - b.stats.dislikes;
-        });
-    } else if (order === "dd") {
-        ret.sort(function comp(a, b) {
-            return b.stats.dislikes - a.stats.dislikes;
-        });
     } else if (order === "ua") {
         ret.sort(function comp(a, b) {
             return (
