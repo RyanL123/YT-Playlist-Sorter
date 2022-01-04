@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Typography, Button, Link as MuiLink } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import playlistID from "../assets/playlistID.png";
 
 export default () => (
     <Box py="5vh" px="10vw">
