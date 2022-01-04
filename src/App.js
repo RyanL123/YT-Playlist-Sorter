@@ -14,6 +14,7 @@ ReactGA.send(window.location.pathname + window.location.search);
 
 class App extends React.Component {
     constructor() {
+        super();
         this.state = {
             order: "vd",
             playlistID: "",
