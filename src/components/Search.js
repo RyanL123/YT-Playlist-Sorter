@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Box, TextField, MenuItem, Button } from "@mui/material";
+import { Search as SearchIcon, InfoOutlined } from "@mui/icons-material";
 
 class Search extends React.Component {
     render() {
@@ -47,12 +48,20 @@ class Search extends React.Component {
                                 variant="outlined"
                                 color="primary"
                                 onClick={this.props.search}
+                                startIcon={<SearchIcon />}
                             >
                                 Search
                             </Button>
                         </Box>
                         <Box mx="5px">
-                            <Button variant="outlined" target="_blank" component={Link} to="/help" target="">
+                            <Button
+                                variant="outlined"
+                                target="_blank"
+                                component={Link}
+                                to="/help"
+                                target=""
+                                startIcon={<InfoOutlined />}
+                            >
                                 Tutorial
                             </Button>
                         </Box>
