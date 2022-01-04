@@ -56,10 +56,8 @@ class Search extends React.Component {
                         <Box mx="5px">
                             <Button
                                 variant="outlined"
-                                target="_blank"
                                 component={Link}
                                 to="/help"
-                                target=""
                                 startIcon={<InfoOutlined />}
                             >
                                 Tutorial
