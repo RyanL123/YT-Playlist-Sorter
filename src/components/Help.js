@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, ArrowBack } from "@material-ui/core";
+import { Box, Typography, Button, ArrowBack } from "@mui/material";
 
 export default () => (
     <Box>

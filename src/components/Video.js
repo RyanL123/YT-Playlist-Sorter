@@ -1,6 +1,6 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { Box, Link, useMediaQuery } from "@material-ui/core";
+import Typography from "@mui/material/Typography";
+import { Box, Link, useMediaQuery } from "@mui/material";
 import { convertISOtoString } from "../util/convertDate";
 
 export default function Video(props) {

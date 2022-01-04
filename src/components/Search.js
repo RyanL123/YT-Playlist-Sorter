@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, TextField, MenuItem, Button } from "@material-ui/core";
+import { Box, TextField, MenuItem, Button } from "@mui/material";
 
 class Search extends React.Component {
     render() {
@@ -52,14 +52,7 @@ class Search extends React.Component {
                             </Button>
                         </Box>
                         <Box mx="5px">
-                            <Button
-                                variant="outlined"
-                                color="default"
-                                target="_blank"
-                                component={Link}
-                                to="/help"
-                                target=""
-                            >
+                            <Button variant="outlined" target="_blank" component={Link} to="/help" target="">
                                 Tutorial
                             </Button>
                         </Box>
