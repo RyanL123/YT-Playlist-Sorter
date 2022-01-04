@@ -13,16 +13,21 @@ export default () => (
         >
             Back
         </Button>
-        <Typography variant="h3" component="h4" textAlign="center">
+        <Typography
+            variant="h3"
+            component="h4"
+            textAlign="center"
+            color="text.primary"
+        >
             Tutorial
         </Typography>
-        <Typography variant="h6" component="h6">
+        <Typography variant="h6" component="h6" color="text.primary">
             1. Find the ID of the playlist you wish to sort on YouTube
         </Typography>
-        <Typography variant="h6" component="h6">
+        <Typography variant="h6" component="h6" color="text.primary">
             2. Click search
         </Typography>
-        <Typography variant="h6" component="h6">
+        <Typography variant="h6" component="h6" color="text.primary">
             3. Select a sorting option (Default sorted by most views)
         </Typography>
     </Box>

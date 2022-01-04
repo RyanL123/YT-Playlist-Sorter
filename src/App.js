@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Box } from "@mui/material";
 import Search from "./components/Search";
 import Results from "./components/Results";
 import Help from "./components/Help";
@@ -80,6 +81,7 @@ class App extends React.Component {
                 loading: true,
             },
             () => {
+                // setTimeout shows the progress bar
                 setTimeout(() => {
                     this.setState({
                         loading: false,
@@ -94,31 +96,33 @@ class App extends React.Component {
     }
     render() {
         return (
-            <BrowserRouter>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <>
-                                <Search
-                                    sortOptions={this.state.sortOptions}
-                                    order={this.state.order}
-                                    playlistID={this.state.playlistID}
-                                    handleChange={(event) =>
-                                        this.handleChange(event)
-                                    }
-                                    search={() => this.getPlaylist()}
-                                />
-                                <Results
-                                    loading={this.state.loading}
-                                    videos={this.state.playlistItems}
-                                />
-                            </>
-                        }
-                    />
-                    <Route path="/help" element={<Help />} />
-                </Routes>
-            </BrowserRouter>
+            <Box backgroundColor="background.default" minHeight="100vh">
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <Box>
+                                    <Search
+                                        sortOptions={this.state.sortOptions}
+                                        order={this.state.order}
+                                        playlistID={this.state.playlistID}
+                                        handleChange={(event) =>
+                                            this.handleChange(event)
+                                        }
+                                        search={() => this.getPlaylist()}
+                                    />
+                                    <Results
+                                        loading={this.state.loading}
+                                        videos={this.state.playlistItems}
+                                    />
+                                </Box>
+                            }
+                        />
+                        <Route path="/help" element={<Help />} />
+                    </Routes>
+                </BrowserRouter>
+            </Box>
         );
     }
 }

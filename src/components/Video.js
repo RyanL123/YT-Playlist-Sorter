@@ -14,25 +14,27 @@ export default function Video(props) {
             my="10px"
         >
             <Box display="flex" flexDirection="column">
-                <Typography variant="h5">
+                <Typography variant="h5" color="text.primary">
                     <Link href={props.stats.link} target="_blank">
                         {props.stats.title}
                     </Link>
                 </Typography>
-                <Typography variant="h6">{props.stats.channel}</Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" color="text.primary">
+                    {props.stats.channel}
+                </Typography>
+                <Typography variant="h6" color="text.primary">
                     Views:{" "}
                     {props.stats.views
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" color="text.primary">
                     Likes:{" "}
                     {props.stats.likes
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" color="text.primary">
                     Upload Date: {convertISOtoString(props.stats.uploadDate)}
                 </Typography>
             </Box>
