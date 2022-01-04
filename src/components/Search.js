@@ -60,7 +60,7 @@ class Search extends React.Component {
                                 to="/help"
                                 startIcon={<InfoOutlined />}
                             >
-                                Tutorial
+                                Help
                             </Button>
                         </Box>
                     </Box>
