@@ -67,6 +67,8 @@ export function sortPlaylist(videos, order) {
                 );
             });
             break;
+        default:
+            break;
     }
     return ret;
 }
