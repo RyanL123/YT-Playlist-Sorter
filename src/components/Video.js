@@ -1,9 +1,9 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Link, useMediaQuery } from "@mui/material";
-import { convertISOtoString } from "../util/convertDate";
+import { convertISOtoString } from "../util/dateUtil";
 
-export default function Video(props) {
+const Video = (props) => {
     const mobile = useMediaQuery("(max-width:1000px)");
     return (
         <Box
@@ -52,4 +52,6 @@ export default function Video(props) {
             </Box>
         </Box>
     );
-}
+};
+
+export default Video;

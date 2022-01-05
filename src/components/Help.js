@@ -3,7 +3,7 @@ import { Box, Typography, Button, Link as MuiLink } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-export default () => (
+const Help = () => (
     <Box py="5vh" px="10vw">
         <Button
             variant="text"
@@ -89,3 +89,5 @@ export default () => (
         </Typography>
     </Box>
 );
+
+export default Help;
