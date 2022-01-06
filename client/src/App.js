@@ -5,7 +5,7 @@ import SEO from "./components/SEO";
 import Search from "./components/Search";
 import Results from "./components/Results";
 import Help from "./components/Help";
-import { generatePlaylist, sortPlaylist } from "./util/playlistUtil";
+import { getPlaylist, sortPlaylist } from "./util/playlistUtil";
 import ReactGA from "react-ga4";
 
 ReactGA.initialize("G-LRVNS567ZT");
@@ -15,7 +15,7 @@ const App = () => {
     const [order, setOrder] = useState("vd");
     const [playlistID, setPlaylistID] = useState("");
     const [loading, setLoading] = useState(false);
-    const [playlistItems, setPlaylistItems] = useState([]);
+    const [playlist, setPlaylist] = useState([]);
     const sortOptions = [
         {
             value: "vd",
@@ -51,13 +51,13 @@ const App = () => {
             label: value,
             value: 1,
         });
-        setOrder(value);
-        setPlaylistItems(sortPlaylist(playlistItems, value));
+        setOrder(value); // update global order
+        setPlaylist(sortPlaylist(playlist, value)); // resorts the playlist
     };
     const updatePlaylistID = (event) => {
         setPlaylistID(event.target.value);
     };
-    const getPlaylist = () => {
+    const handleSearch = () => {
         // Google Analytics
         ReactGA.event({
             category: "Search",
@@ -65,8 +65,10 @@ const App = () => {
             value: 1,
         });
         setLoading(true);
-        setPlaylistItems(generatePlaylist(playlistID, order));
-        setLoading(false);
+        getPlaylist(playlistID, order).then((data) => {
+            setPlaylist(data);
+            setLoading(false);
+        });
     };
     return (
         <Box backgroundColor="background.default" minHeight="100vh">
@@ -87,13 +89,10 @@ const App = () => {
                                     updateSortOrder={(event) =>
                                         updateSortOrder(event)
                                     }
-                                    search={() => getPlaylist()}
+                                    search={() => handleSearch()}
                                     loading={loading}
                                 />
-                                <Results
-                                    loading={loading}
-                                    videos={playlistItems}
-                                />
+                                <Results videos={playlist} />
                             </Box>
                         }
                     />

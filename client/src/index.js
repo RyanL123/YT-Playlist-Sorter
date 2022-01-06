@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
 // MUI
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,13 +16,11 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-    <>
+    <React.StrictMode>
         <CssBaseline enableColorScheme />
         <ThemeProvider theme={theme}>
             <App />
         </ThemeProvider>
-    </>,
+    </React.StrictMode>,
     document.getElementById("root")
 );
-
-serviceWorker.unregister();
