@@ -1,32 +1,4 @@
-import api_key from "./api";
 import { convertISOtoInt } from "./dateUtil";
-
-function getJSON(url) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
-}
-
-function getPlaylist(ID) {
-    var playlist = getJSON(
-        "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=" +
-            ID +
-            "&key=" +
-            api_key
-    );
-    return playlist;
-}
-
-function getVideoStats(videoID) {
-    var stats = getJSON(
-        "https://www.googleapis.com/youtube/v3/videos?part=statistics%2Csnippet&id=" +
-            videoID +
-            "&key=" +
-            api_key
-    );
-    return stats;
-}
 
 export function sortPlaylist(videos, order) {
     var ret = videos;
@@ -73,33 +45,44 @@ export function sortPlaylist(videos, order) {
     return ret;
 }
 
-export function generatePlaylist(ID, order) {
-    const playlist = JSON.parse(getPlaylist(ID));
-    var videos = [];
-    if (!playlist.items) return videos;
-    for (var i = 0; i < playlist.items.length; i++) {
-        const vid = playlist.items[i];
-        var videoID = vid.snippet.resourceId.videoId;
-        var video = JSON.parse(getVideoStats(videoID)).items[0];
-        // make sure video isnt private or removed
-        if (video) {
-            videos.push({
-                stats: {
-                    views: parseInt(video.statistics.viewCount),
-                    likes: video.statistics.likeCount
-                        ? video.statistics.likeCount
-                        : "Hidden",
-                    uploadDate: video.snippet.publishedAt,
-                    channel: video.snippet.channelTitle,
-                    title: playlist.items[i].snippet.title,
-                    thumbnail: playlist.items[i].snippet.thumbnails.medium.url,
-                    link:
-                        "https://www.youtube.com/watch?v=" +
-                        playlist.items[i].snippet.resourceId.videoId,
-                },
-            });
-        }
-    }
-    videos = sortPlaylist(videos, order);
-    return videos;
+function getVideo(videoID) {
+    return fetch(`/api/video/?id=${videoID}`).then((res) => {
+        return res.json().then((data) => {
+            const video = data.items[0];
+            // make sure video isn't private or removed
+            if (video) {
+                return {
+                    stats: {
+                        views: parseInt(video.statistics.viewCount),
+                        likes: video.statistics.likeCount
+                            ? video.statistics.likeCount
+                            : "Hidden",
+                        uploadDate: video.snippet.publishedAt,
+                        channel: video.snippet.channelTitle,
+                        title: video.snippet.title,
+                        thumbnail: video.snippet.thumbnails.medium.url,
+                        link: `https://www.youtube.com/watch?v=${video.id}`,
+                    },
+                };
+            }
+        });
+    });
+}
+
+export function getPlaylist(playlistID, order) {
+    return fetch(`/api/playlist/?id=${playlistID}`).then((res) => {
+        return res.json().then(async (playlist) => {
+            let results = [];
+            if (!playlist.items) return results; // playlist is empty
+            for (var i = 0; i < playlist.items.length; i++) {
+                const videoID = playlist.items[i].snippet.resourceId.videoId;
+                // ensure all videos are processed before returning
+                await getVideo(videoID).then((data) => {
+                    results.push(data);
+                });
+            }
+            results = sortPlaylist(results, order);
+            return results;
+        });
+    });
 }
