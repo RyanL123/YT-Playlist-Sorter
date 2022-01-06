@@ -77,6 +77,7 @@ export function getPlaylist(playlistID, order) {
             for (var i = 0; i < playlist.items.length; i++) {
                 const videoID = playlist.items[i].snippet.resourceId.videoId;
                 // ensure all videos are processed before returning
+                // eslint-disable-next-line
                 await getVideo(videoID).then((data) => {
                     results.push(data);
                 });
