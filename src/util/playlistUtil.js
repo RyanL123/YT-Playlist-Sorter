@@ -1,4 +1,15 @@
 import { convertISOtoInt } from "./dateUtil";
+import { initializeApp } from "firebase/app";
+import { getFunctions, httpsCallable } from "firebase/functions";
+require("dotenv").config();
+
+const app = initializeApp({
+    projectId: "playlist-view-sorter",
+    apiKey: "AIzaSyASHiR5xOAiw_xRv9sj7joHHwua7qUe2sY",
+    authDomain: "playlist-view-sorter.firebaseapp.com",
+});
+const functions = getFunctions(app);
+const api = httpsCallable(functions, "app");
 
 export function sortPlaylist(videos, order) {
     var ret = videos;
@@ -46,11 +57,13 @@ export function sortPlaylist(videos, order) {
 }
 
 function getVideo(videoID) {
-    return fetch(`/api/video/?id=${videoID}`).then((res) => {
+    return fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics%2Csnippet&id=${videoID}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+    ).then((res) => {
         return res.json().then((data) => {
             const video = data.items[0];
             // make sure video isn't private or removed
-            if (video) {
+            if (data.items.length !== 0) {
                 return {
                     stats: {
                         views: parseInt(video.statistics.viewCount),
@@ -70,7 +83,12 @@ function getVideo(videoID) {
 }
 
 export function getPlaylist(playlistID, order) {
-    return fetch(`/api/playlist/?id=${playlistID}`).then((res) => {
+    hello().then((res) => {
+        console.log(res);
+    });
+    return fetch(
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=${playlistID}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+    ).then((res) => {
         return res.json().then(async (playlist) => {
             let results = [];
             if (!playlist.items) return results; // playlist is empty
@@ -79,7 +97,9 @@ export function getPlaylist(playlistID, order) {
                 // ensure all videos are processed before returning
                 // eslint-disable-next-line
                 await getVideo(videoID).then((data) => {
-                    results.push(data);
+                    if (data) {
+                        results.push(data);
+                    }
                 });
             }
             results = sortPlaylist(results, order);
