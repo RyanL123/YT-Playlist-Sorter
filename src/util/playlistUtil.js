@@ -5,7 +5,6 @@ import {
     httpsCallable,
     connectFunctionsEmulator,
 } from "firebase/functions";
-require("dotenv").config();
 
 const app = initializeApp({
     projectId: "playlist-view-sorter",
@@ -61,54 +60,45 @@ export function sortPlaylist(videos, order) {
 }
 
 function getVideo(videoID) {
-    return fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics%2Csnippet&id=${videoID}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
-    ).then((res) => {
-        return res.json().then((data) => {
-            const video = data.items[0];
-            // make sure video isn't private or removed
-            if (data.items.length !== 0) {
-                return {
-                    stats: {
-                        views: parseInt(video.statistics.viewCount),
-                        likes: video.statistics.likeCount
-                            ? video.statistics.likeCount
-                            : "Hidden",
-                        uploadDate: video.snippet.publishedAt,
-                        channel: video.snippet.channelTitle,
-                        title: video.snippet.title,
-                        thumbnail: video.snippet.thumbnails.medium.url,
-                        link: `https://www.youtube.com/watch?v=${video.id}`,
-                    },
-                };
-            }
-        });
+    const videoFunction = httpsCallable(functions, "video");
+    return videoFunction({ id: videoID }).then((res) => {
+        const video = res.data.items[0];
+        // make sure video isn't private or removed
+        if (res.data.items.length !== 0) {
+            return {
+                stats: {
+                    views: parseInt(video.statistics.viewCount),
+                    likes: video.statistics.likeCount
+                        ? video.statistics.likeCount
+                        : "Hidden",
+                    uploadDate: video.snippet.publishedAt,
+                    channel: video.snippet.channelTitle,
+                    title: video.snippet.title,
+                    thumbnail: video.snippet.thumbnails.medium.url,
+                    link: `https://www.youtube.com/watch?v=${video.id}`,
+                },
+            };
+        }
     });
 }
 
 export function getPlaylist(playlistID, order) {
     const playlistFunction = httpsCallable(functions, "playlist");
-    playlistFunction({ id: playlistID }).then((result) => {
-        console.log(result);
-    });
-    return fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=${playlistID}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
-    ).then((res) => {
-        return res.json().then(async (playlist) => {
-            let results = [];
-            if (!playlist.items) return results; // playlist is empty
-            for (var i = 0; i < playlist.items.length; i++) {
-                const videoID = playlist.items[i].snippet.resourceId.videoId;
-                // ensure all videos are processed before returning
-                // eslint-disable-next-line
-                await getVideo(videoID).then((data) => {
-                    if (data) {
-                        results.push(data);
-                    }
-                });
-            }
-            results = sortPlaylist(results, order);
-            return results;
-        });
+    return playlistFunction({ id: playlistID }).then(async (res) => {
+        const playlist = res.data;
+        let results = [];
+        if (!playlist.items) return results; // playlist is empty
+        for (var i = 0; i < playlist.items.length; i++) {
+            const videoID = playlist.items[i].snippet.resourceId.videoId;
+            // ensure all videos are processed before returning
+            // eslint-disable-next-line
+            await getVideo(videoID).then((data) => {
+                if (data) {
+                    results.push(data);
+                }
+            });
+        }
+        results = sortPlaylist(results, order);
+        return results;
     });
 }
