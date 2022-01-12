@@ -46,7 +46,9 @@ export function sortPlaylist(videos, order) {
 }
 
 function getVideo(videoID) {
-    return fetch(`/api/video/?id=${videoID}`).then((res) => {
+    return fetch(
+        `https://yt-playlist-sorter.azurewebsites.net/api/video/?id=${videoID}`
+    ).then((res) => {
         return res.json().then((data) => {
             const video = data.items[0];
             // make sure video isn't private or removed
@@ -70,7 +72,9 @@ function getVideo(videoID) {
 }
 
 export function getPlaylist(playlistID, order) {
-    return fetch(`/api/playlist/?id=${playlistID}`).then((res) => {
+    return fetch(
+        `https://yt-playlist-sorter.azurewebsites.net/api/playlist/?id=${playlistID}`
+    ).then((res) => {
         return res.json().then(async (playlist) => {
             let results = [];
             if (!playlist.items) return results; // playlist is empty
@@ -79,7 +83,9 @@ export function getPlaylist(playlistID, order) {
                 // ensure all videos are processed before returning
                 // eslint-disable-next-line
                 await getVideo(videoID).then((data) => {
-                    results.push(data);
+                    if (data) {
+                        results.push(data);
+                    }
                 });
             }
             results = sortPlaylist(results, order);
