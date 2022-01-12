@@ -1,6 +1,10 @@
 import { convertISOtoInt } from "./dateUtil";
 import { initializeApp } from "firebase/app";
-import { getFunctions, httpsCallable } from "firebase/functions";
+import {
+    getFunctions,
+    httpsCallable,
+    connectFunctionsEmulator,
+} from "firebase/functions";
 require("dotenv").config();
 
 const app = initializeApp({
@@ -9,7 +13,7 @@ const app = initializeApp({
     authDomain: "playlist-view-sorter.firebaseapp.com",
 });
 const functions = getFunctions(app);
-const api = httpsCallable(functions, "app");
+connectFunctionsEmulator(functions, "localhost", 5001);
 
 export function sortPlaylist(videos, order) {
     var ret = videos;
@@ -83,8 +87,9 @@ function getVideo(videoID) {
 }
 
 export function getPlaylist(playlistID, order) {
-    hello().then((res) => {
-        console.log(res);
+    const playlistFunction = httpsCallable(functions, "playlist");
+    playlistFunction({ id: playlistID }).then((result) => {
+        console.log(result);
     });
     return fetch(
         `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=${playlistID}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
