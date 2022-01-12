@@ -12,7 +12,7 @@ const app = initializeApp({
     authDomain: "playlist-view-sorter.firebaseapp.com",
 });
 const functions = getFunctions(app);
-connectFunctionsEmulator(functions, "localhost", 5001);
+// connectFunctionsEmulator(functions, "localhost", 5001);
 
 export function sortPlaylist(videos, order) {
     var ret = videos;
