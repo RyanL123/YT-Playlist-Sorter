@@ -47,8 +47,9 @@ const Help = () => (
             by Kurzgesagt for example: The link is
             https://www.youtube.com/playlist?list=
             <b>PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF</b>, and the playlist ID would
-            be the bolded part, <b>PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF</b>. In
-            fact, sorting it using the sorter!
+            be the bolded part, <b>PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF</b>. You
+            can also paste in the entire link. In fact, try sorting it using the
+            sorter!
         </Typography>
         <Typography
             variant="h5"

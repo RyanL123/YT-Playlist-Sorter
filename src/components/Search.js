@@ -17,7 +17,7 @@ const Search = (props) => (
                     <TextField
                         fullWidth
                         variant="outlined"
-                        label="Playlist ID"
+                        label="Playlist ID or Link"
                         name="playlistID"
                         value={props.playlistID}
                         onChange={props.updatePlaylistID}
