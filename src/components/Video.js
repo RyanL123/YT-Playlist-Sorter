@@ -11,7 +11,7 @@ const Video = (props) => {
             flexDirection={mobile ? "column" : "row"}
             width="100%"
             justifyContent="space-between"
-            my="10px"
+            my="20px"
         >
             <Box display="flex" flexDirection="column">
                 <Typography variant="h5" color="text.primary">
