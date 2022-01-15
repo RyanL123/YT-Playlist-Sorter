@@ -73,10 +73,14 @@ const App = () => {
                 : playlistID.slice(
                       playlistID.indexOf("?list=") + "?list=".length
                   );
-        getPlaylist(sanitizedPlaylistID, order).then((data) => {
-            setPlaylist(data);
-            setLoading(false);
-        });
+        try {
+            getPlaylist(sanitizedPlaylistID, "", order, 1).then((data) => {
+                setPlaylist(data);
+                setLoading(false);
+            });
+        } catch (e) {
+            console.log(e);
+        }
     };
     return (
         <Box backgroundColor="background.default" minHeight="100vh">

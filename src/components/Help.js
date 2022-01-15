@@ -64,7 +64,7 @@ const Help = () => (
             After typing in the playlist ID into the search bar, simply click
             search and wait until the playlist loads. The videos are default
             sorted by most views which can be changed using the dropdown sort
-            options menu. Only a maximum of 50 videos will be sorted due to API
+            options menu. Only a maximum of 200 videos will be sorted due to API
             limits.
         </Typography>
         <Typography

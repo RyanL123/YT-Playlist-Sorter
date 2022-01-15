@@ -12,7 +12,7 @@ const app = initializeApp({
     authDomain: "playlist-view-sorter.firebaseapp.com",
 });
 const functions = getFunctions(app);
-// connectFunctionsEmulator(functions, "localhost", 5001);
+connectFunctionsEmulator(functions, "localhost", 5001);
 
 export function sortPlaylist(videos, order) {
     var ret = videos;
@@ -62,6 +62,7 @@ export function sortPlaylist(videos, order) {
 function getVideo(videoID) {
     const videoFunction = httpsCallable(functions, "video");
     return videoFunction({ id: videoID }).then((res) => {
+        console.log(res.data);
         const video = res.data.items[0];
         // make sure video isn't private or removed
         if (res.data.items.length !== 0) {
@@ -82,23 +83,41 @@ function getVideo(videoID) {
     });
 }
 
-export function getPlaylist(playlistID, order) {
+export async function getPlaylist(playlistID, pageToken, order, count) {
+    // 4 pages * 50 videos/page = 200 videos max
+    if (count > 4) {
+        return [];
+    }
     const playlistFunction = httpsCallable(functions, "playlist");
-    return playlistFunction({ id: playlistID }).then(async (res) => {
-        const playlist = res.data;
-        let results = [];
-        if (!playlist.items) return results; // playlist is empty
-        for (var i = 0; i < playlist.items.length; i++) {
-            const videoID = playlist.items[i].snippet.resourceId.videoId;
-            // ensure all videos are processed before returning
-            // eslint-disable-next-line
-            await getVideo(videoID).then((data) => {
-                if (data) {
-                    results.push(data);
-                }
-            });
+    return playlistFunction({ id: playlistID, token: pageToken }).then(
+        async (res) => {
+            const playlist = res.data;
+            let results = [];
+            if (!playlist.items) return results; // playlist is empty
+            for (var i = 0; i < playlist.items.length; i++) {
+                const videoID = playlist.items[i].snippet.resourceId.videoId;
+                // ensure all videos are processed before returning
+                // eslint-disable-next-line
+                await getVideo(videoID).then((data) => {
+                    if (data) {
+                        results.push(data);
+                    }
+                });
+            }
+            // recursively get next page of data
+            if (res.data.nextPageToken) {
+                await getPlaylist(
+                    playlistID,
+                    res.data.nextPageToken,
+                    order,
+                    count + 1
+                ).then((data) => {
+                    // append data to current results
+                    results = results.concat(data);
+                });
+            }
+            results = sortPlaylist(results, order);
+            return results;
         }
-        results = sortPlaylist(results, order);
-        return results;
-    });
+    );
 }

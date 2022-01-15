@@ -5,8 +5,9 @@ const fetch = require("node-fetch");
 
 exports.playlist = functions.https.onCall(async (data, context) => {
     const id = data.id;
+    const token = data.token || ""; // make sure token is not undefined
     return await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=${id}&key=${process.env.YOUTUBE_API_KEY}`
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=${id}&pageToken=${token}&key=${process.env.YOUTUBE_API_KEY}`
     ).then((res) => {
         return res.json();
     });
