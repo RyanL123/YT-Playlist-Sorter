@@ -68,10 +68,10 @@ const App = () => {
         // extracts playlist ID from a complete link
         // if ?list= doesn't exist, assume user pasted in only the ID
         const sanitizedPlaylistID =
-            playlistID.indexOf("?list=") === -1
+            playlistID.indexOf("list=") === -1
                 ? playlistID
                 : playlistID.slice(
-                      playlistID.indexOf("?list=") + "?list=".length
+                      playlistID.indexOf("list=") + "list=".length
                   );
         try {
             getPlaylist(sanitizedPlaylistID, "", order, 1).then((data) => {
