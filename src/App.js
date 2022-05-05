@@ -41,6 +41,14 @@ const App = () => {
             value: "ua",
             label: "Earliest",
         },
+        {
+            value: "dd",
+            label: "Longest",
+        },
+        {
+            value: "da",
+            label: "Shortest",
+        },
     ];
     const updateSortOrder = (event) => {
         const value = event.target.value;
