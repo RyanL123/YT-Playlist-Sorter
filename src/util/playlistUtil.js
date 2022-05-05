@@ -62,7 +62,6 @@ export function sortPlaylist(videos, order) {
 function getVideo(videoID) {
     const videoFunction = httpsCallable(functions, "video");
     return videoFunction({ id: videoID }).then((res) => {
-        console.log(res.data);
         const video = res.data.items[0];
         // make sure video isn't private or removed
         if (res.data.items.length !== 0) {
