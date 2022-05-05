@@ -1,4 +1,5 @@
 import { convertISOtoInt } from "./dateUtil";
+import { parse, toSeconds } from "iso8601-duration";
 import { initializeApp } from "firebase/app";
 import {
     getFunctions,
@@ -12,7 +13,7 @@ const app = initializeApp({
     authDomain: "playlist-view-sorter.firebaseapp.com",
 });
 const functions = getFunctions(app);
-connectFunctionsEmulator(functions, "localhost", 5001);
+// connectFunctionsEmulator(functions, "localhost", 5001);
 
 export function sortPlaylist(videos, order) {
     var ret = videos;
@@ -53,6 +54,16 @@ export function sortPlaylist(videos, order) {
                 );
             });
             break;
+        case "da":
+            ret.sort(function comp(a, b) {
+                return a.stats.duration - b.stats.duration;
+            });
+            break;
+        case "dd":
+            ret.sort(function comp(a, b) {
+                return b.stats.duration - a.stats.duration;
+            });
+            break;
         default:
             break;
     }
@@ -76,6 +87,7 @@ function getVideo(videoID) {
                     title: video.snippet.title,
                     thumbnail: video.snippet.thumbnails.medium.url,
                     link: `https://www.youtube.com/watch?v=${video.id}`,
+                    duration: toSeconds(parse(video.contentDetails.duration)),
                 },
             };
         }

@@ -16,7 +16,7 @@ exports.playlist = functions.https.onCall(async (data, context) => {
 exports.video = functions.https.onCall(async (data, context) => {
     const id = data.id;
     return await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics%2Csnippet&id=${id}&key=${process.env.YOUTUBE_API_KEY}`
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics%2Csnippet%2CcontentDetails&id=${id}&key=${process.env.YOUTUBE_API_KEY}`
     ).then((res) => {
         return res.json();
     });

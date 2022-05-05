@@ -37,6 +37,12 @@ const Video = (props) => {
                 <Typography variant="h6" color="text.primary">
                     Upload Date: {convertISOtoString(props.stats.uploadDate)}
                 </Typography>
+                <Typography variant="h6" color="text.primary">
+                    Duration:{" "}
+                    {new Date(props.stats.duration * 1000)
+                        .toISOString()
+                        .substr(11, 8)}
+                </Typography>
             </Box>
             <Box>
                 <Link href={props.stats.link} target="_blank">
