@@ -6,12 +6,9 @@ import {
     httpsCallable,
     connectFunctionsEmulator,
 } from "firebase/functions";
+import firebaseConfig from "./firebaseConfig";
 
-const app = initializeApp({
-    projectId: "playlist-view-sorter",
-    apiKey: "AIzaSyASHiR5xOAiw_xRv9sj7joHHwua7qUe2sY",
-    authDomain: "playlist-view-sorter.firebaseapp.com",
-});
+const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app);
 // connectFunctionsEmulator(functions, "localhost", 5001);
 
