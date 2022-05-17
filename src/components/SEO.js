@@ -41,5 +41,9 @@ export default () => (
             property="twitter:description"
             content="Sort any YouTube playlist based on selected attributes"
         />
+        <meta
+            name="google-site-verification"
+            content="XMlh0bvuIwk4VLs0UKkRZaosgtFwe2ObsG0ZnXvGgks"
+        />
     </Helmet>
 );
