@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
-import SEO from "./components/SEO";
 import Search from "./components/Search";
 import Results from "./components/Results";
 import Help from "./components/Help";
@@ -92,7 +91,6 @@ const App = () => {
     };
     return (
         <Box backgroundColor="background.default" minHeight="100vh">
-            <SEO />
             <BrowserRouter>
                 <Routes>
                     <Route
