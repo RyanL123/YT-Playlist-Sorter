@@ -35,9 +35,9 @@ Replace [firebaseConfig.js](src/util/firebaseConfig.js) with your own firebase c
 
 ```js
 export default {
-    projectId: "YOUR_PROJECT_ID_HERE",
-    apiKey: "YOUR_API_KEY_HERE",
-    authDomain: "YOUR_AUTH_DOMAIN_HERE",
+  projectId: "YOUR_PROJECT_ID_HERE",
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_AUTH_DOMAIN_HERE",
 };
 ```
 

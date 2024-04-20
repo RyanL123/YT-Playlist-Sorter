@@ -10,17 +10,17 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 const theme = createTheme({
-    palette: {
-        mode: "dark",
-    },
+  palette: {
+    mode: "dark",
+  },
 });
 
 ReactDOM.render(
-    <React.StrictMode>
-        <CssBaseline enableColorScheme />
-        <ThemeProvider theme={theme}>
-            <App />
-        </ThemeProvider>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <CssBaseline enableColorScheme />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
+  document.getElementById("root"),
 );
