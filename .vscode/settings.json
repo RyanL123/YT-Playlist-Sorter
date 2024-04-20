@@ -1,5 +1,9 @@
 {
-    "editor.formatOnSave": true,
-    "appService.defaultWebAppToDeploy": "/subscriptions/7ef38198-9112-47ce-81b7-1b34912acbe7/resourceGroups/YT-Playlist-Sorter/providers/Microsoft.Web/sites/YT-Playlist-Sorter",
-    "appService.deploySubpath": "server"
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "eslint.format.enable": true,
+  "appService.defaultWebAppToDeploy": "/subscriptions/7ef38198-9112-47ce-81b7-1b34912acbe7/resourceGroups/YT-Playlist-Sorter/providers/Microsoft.Web/sites/YT-Playlist-Sorter",
+  "appService.deploySubpath": "server"
 }
