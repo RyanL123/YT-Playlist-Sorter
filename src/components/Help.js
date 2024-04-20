@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, Link as MuiLink } from "@mui/material";
+import { Box, Button, Link as MuiLink, Typography } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 

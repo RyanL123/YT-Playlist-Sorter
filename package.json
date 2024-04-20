@@ -29,7 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "npx eslint ."
+    "lint": "npx eslint . --ignore-pattern \"build/\"",
+    "lint:fix": "npx eslint . --ignore-pattern \"build/\" --fix"
   },
   "eslintConfig": {
     "extends": "react-app"

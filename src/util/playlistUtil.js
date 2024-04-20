@@ -1,7 +1,8 @@
-import { convertISOtoInt } from "./dateUtil";
 import { parse, toSeconds } from "iso8601-duration";
 import { initializeApp } from "firebase/app";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { convertISOtoInt } from "./dateUtil";
+
 import firebaseConfig from "./firebaseConfig";
 
 const app = initializeApp(firebaseConfig);

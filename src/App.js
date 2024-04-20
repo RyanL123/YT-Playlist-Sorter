@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
+import ReactGA from "react-ga4";
 import Search from "./components/Search";
 import Results from "./components/Results";
 import Help from "./components/Help";
 import { getPlaylist, sortPlaylist } from "./util/playlistUtil";
-import ReactGA from "react-ga4";
 
 ReactGA.initialize("G-LRVNS567ZT");
 ReactGA.send(window.location.pathname + window.location.search);
