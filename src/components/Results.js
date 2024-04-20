@@ -1,5 +1,6 @@
-import React from "react";
 import { Box } from "@mui/material";
+import PropTypes from "prop-types";
+import React from "react";
 import Video from "./Video";
 
 const Results = (props) => (
@@ -11,10 +12,14 @@ const Results = (props) => (
     px="10vw"
     pb="5vh"
   >
-    {props.videos.map((video) => {
-      return <Video stats={video.stats}></Video>;
+    {props.videos.map((video, index) => {
+      return <Video stats={video.stats} key={index}></Video>;
     })}
   </Box>
 );
+
+Results.propTypes = {
+  videos: PropTypes.array,
+};
 
 export default Results;

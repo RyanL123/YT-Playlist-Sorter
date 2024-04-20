@@ -1,8 +1,9 @@
+import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
+import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, MenuItem, TextField } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
 
 const Search = (props) => (
   <Box display="flex" justifyContent="center" py="5vh" px="10vw">
@@ -68,5 +69,15 @@ const Search = (props) => (
     </Box>
   </Box>
 );
+
+Search.propTypes = {
+  playlistID: PropTypes.string,
+  order: PropTypes.string,
+  loading: PropTypes.bool,
+  updatePlaylistID: PropTypes.func,
+  updateSortOrder: PropTypes.func,
+  search: PropTypes.func,
+  sortOptions: PropTypes.array,
+};
 
 export default Search;

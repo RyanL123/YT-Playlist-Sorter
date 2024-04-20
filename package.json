@@ -6,11 +6,9 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fontsource/roboto": "^4.5.1",
-    "@material-ui/core": "^4.11.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/lab": "^5.0.0-alpha.63",
     "@mui/material": "^5.2.7",
-    "@mui/styles": "^5.2.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -18,8 +16,8 @@
     "express": "^4.17.2",
     "firebase": "^9.6.1",
     "iso8601-duration": "^2.1.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-ga4": "^1.4.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.1"
@@ -30,7 +28,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "npx eslint . --ignore-pattern \"build/\"",
-    "lint:fix": "npx eslint . --ignore-pattern \"build/\" --fix"
+    "lint:fix": "npx eslint . --ignore-pattern \"build/\" --fix",
+    "format": "npx prettier . --check",
+    "format:fix": "npx prettier . --write"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +51,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.1.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",

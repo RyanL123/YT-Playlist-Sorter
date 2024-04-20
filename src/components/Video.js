@@ -1,6 +1,7 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
 import { Box, Link, useMediaQuery } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+import React from "react";
 import { convertISOtoString } from "../util/dateUtil";
 
 const Video = (props) => {
@@ -52,6 +53,19 @@ const Video = (props) => {
       </Box>
     </Box>
   );
+};
+
+Video.propTypes = {
+  stats: PropTypes.shape({
+    title: PropTypes.string,
+    thumbnail: PropTypes.string,
+    link: PropTypes.string,
+    channel: PropTypes.string,
+    likes: PropTypes.number,
+    uploadDate: PropTypes.string,
+    views: PropTypes.number,
+    duration: PropTypes.number,
+  }),
 };
 
 export default Video;

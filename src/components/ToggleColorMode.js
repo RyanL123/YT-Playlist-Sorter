@@ -1,13 +1,14 @@
-import * as React from "react";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import { useTheme } from "@mui/material/styles";
+import * as React from "react";
 import ColorModeContext from "../index";
 
-export default () => {
+const ToggleColorMode = () => {
   const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
   return (
     <ColorModeContext.Consumer>
       <Box
@@ -38,3 +39,5 @@ export default () => {
     </ColorModeContext.Consumer>
   );
 };
+
+export default ToggleColorMode;
