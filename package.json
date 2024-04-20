@@ -30,7 +30,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "npx eslint . --ignore-pattern \"build/\"",
-    "lint:fix": "npx eslint . --ignore-pattern \"build/\" --fix"
+    "lint:fix": "npx eslint . --ignore-pattern \"build/\" --fix",
+    "format": "npx prettier . --check",
+    "format:fix": "npx prettier . --write"
   },
   "eslintConfig": {
     "extends": "react-app"
