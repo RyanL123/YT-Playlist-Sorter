@@ -1,8 +1,8 @@
-import globals from "globals";
 import pluginJs from "@eslint/js";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginImport from "eslint-plugin-import";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+import globals from "globals";
 
 export default [
   {
@@ -22,7 +22,6 @@ export default [
       eslintPluginImport,
     },
     rules: {
-      "sort-imports": "error",
       "eslintPluginImport/order": "error",
     },
   },
