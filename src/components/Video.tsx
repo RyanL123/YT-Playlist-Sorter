@@ -1,22 +1,10 @@
 import { Box, Link, useMediaQuery } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { IVideoMetadata } from "../types";
 import { convertISOtoString } from "../util/dateUtil";
 
-const Video = ({
-  stats,
-}: {
-  stats: {
-    link: string;
-    title: string;
-    channel: string;
-    views: number;
-    likes: number;
-    uploadDate: string;
-    duration: number;
-    thumbnail: string;
-  };
-}) => {
+const Video = ({ metadata }: { metadata: IVideoMetadata }) => {
   const mobile = useMediaQuery("(max-width:1000px)");
   return (
     <Box
@@ -28,36 +16,38 @@ const Video = ({
     >
       <Box display="flex" flexDirection="column">
         <Typography variant="h5" color="text.primary">
-          <Link href={stats.link} target="_blank">
-            {stats.title}
+          <Link href={metadata.link} target="_blank">
+            {metadata.title}
           </Link>
         </Typography>
         <Typography variant="h6" color="text.primary">
-          {stats.channel}
+          {metadata.channel}
         </Typography>
         <Typography variant="h6" color="text.primary">
-          Views: {stats.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          Views:{" "}
+          {metadata.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Typography>
         <Typography variant="h6" color="text.primary">
-          Likes: {stats.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          Likes:{" "}
+          {metadata.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Typography>
         <Typography variant="h6" color="text.primary">
-          Upload Date: {convertISOtoString(stats.uploadDate)}
+          Upload Date: {convertISOtoString(metadata.uploadDate)}
         </Typography>
         <Typography variant="h6" color="text.primary">
           Duration:{" "}
-          {new Date(stats.duration * 1000).toISOString().substr(11, 8)}
+          {new Date(metadata.duration * 1000).toISOString().substr(11, 8)}
         </Typography>
       </Box>
       <Box>
-        <Link href={stats.link} target="_blank">
+        <Link href={metadata.link} target="_blank">
           <img
-            src={stats.thumbnail}
+            src={metadata.thumbnail}
             style={{
               width: mobile ? "100%" : "300px",
               height: "auto",
             }}
-            alt={stats.title}
+            alt={metadata.title}
           />
         </Link>
       </Box>
