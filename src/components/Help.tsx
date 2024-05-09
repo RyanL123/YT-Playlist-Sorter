@@ -1,6 +1,6 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Link as MuiLink, Typography } from "@mui/material";
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 
 const Help = () => (
@@ -27,7 +27,7 @@ const Help = () => (
     >
       What is the Playlist ID?
     </Typography>
-    <Typography variant="p" component="p" color="text.secondary" mb={5}>
+    <Typography component="p" color="text.secondary" mb={5}>
       The playlist ID is found at the end of a YouTube playlist link, the
       letters immediately following &list=. Take
       <MuiLink
@@ -54,7 +54,7 @@ const Help = () => (
     >
       How do I sort?
     </Typography>
-    <Typography variant="p" component="p" color="text.secondary" mb={5}>
+    <Typography component="p" color="text.secondary" mb={5}>
       After typing in the playlist ID into the search bar, simply click search
       and wait until the playlist loads. The videos are default sorted by most
       views which can be changed using the dropdown sort options menu. Only a
@@ -69,7 +69,7 @@ const Help = () => (
     >
       Feature Requests?
     </Typography>
-    <Typography variant="p" component="p" color="text.secondary" mb={5}>
+    <Typography component="p" color="text.secondary" mb={5}>
       For now, please submit a issue to{" "}
       <MuiLink
         href="https://github.com/RyanL123/YT-Playlist-Sorter/issues"
