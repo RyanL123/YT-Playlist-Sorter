@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="MuiBox-root css-18tsnoh"
+>
+  <div
+    className="MuiBox-root css-j7qwjs"
+  >
+    <h5
+      className="MuiTypography-root MuiTypography-h5 css-1xszx61-MuiTypography-root"
+    >
+      <a
+        className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+        href="https://www.youtube.com/watch?v=123"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        target="_blank"
+      >
+        Test
+      </a>
+    </h5>
+    <h6
+      className="MuiTypography-root MuiTypography-h6 css-1uaewpj-MuiTypography-root"
+    >
+      Test
+    </h6>
+    <h6
+      className="MuiTypography-root MuiTypography-h6 css-1uaewpj-MuiTypography-root"
+    >
+      Views:
+       
+      12,345
+    </h6>
+    <h6
+      className="MuiTypography-root MuiTypography-h6 css-1uaewpj-MuiTypography-root"
+    >
+      Likes:
+       
+      12,345
+    </h6>
+    <h6
+      className="MuiTypography-root MuiTypography-h6 css-1uaewpj-MuiTypography-root"
+    >
+      Upload Date:
+       
+      January 1, 1990
+    </h6>
+    <h6
+      className="MuiTypography-root MuiTypography-h6 css-1uaewpj-MuiTypography-root"
+    >
+      Duration:
+       
+      01:01:01
+    </h6>
+  </div>
+  <div
+    className="MuiBox-root css-0"
+  >
+    <a
+      className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+      href="https://www.youtube.com/watch?v=123"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      target="_blank"
+    >
+      <img
+        alt="Test"
+        src="abc.com"
+        style={
+          Object {
+            "height": "auto",
+            "width": "300px",
+          }
+        }
+      />
+    </a>
+  </div>
+</div>
+`;
