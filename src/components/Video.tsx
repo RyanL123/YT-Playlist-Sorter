@@ -1,11 +1,13 @@
 import { Box, Link, useMediaQuery } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { parse, toSeconds } from "iso8601-duration";
 import * as React from "react";
 import { VideoMetadata } from "../types";
-import { convertISOtoString } from "../util/dateUtil";
 
 const Video = ({ metadata }: { metadata: VideoMetadata }) => {
   const mobile = useMediaQuery("(max-width:1000px)");
+  const videoLink = `https://www.youtube.com/watch?v=${metadata.id}`;
+
   return (
     <Box
       display="flex"
@@ -16,38 +18,43 @@ const Video = ({ metadata }: { metadata: VideoMetadata }) => {
     >
       <Box display="flex" flexDirection="column">
         <Typography variant="h5" color="text.primary">
-          <Link href={metadata.link} target="_blank">
-            {metadata.title}
+          <Link href={videoLink} target="_blank">
+            {metadata.snippet.title}
           </Link>
         </Typography>
         <Typography variant="h6" color="text.primary">
-          {metadata.channel}
+          {metadata.snippet.channelTitle}
         </Typography>
         <Typography variant="h6" color="text.primary">
           Views:{" "}
-          {metadata.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          {metadata.statistics.viewCount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Typography>
         <Typography variant="h6" color="text.primary">
           Likes:{" "}
-          {metadata.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          {metadata.statistics.likeCount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Typography>
         <Typography variant="h6" color="text.primary">
-          Upload Date: {convertISOtoString(metadata.uploadDate)}
+          Upload Date:{" "}
+          {Intl.DateTimeFormat("en", { dateStyle: "long" }).format(
+            new Date(metadata.snippet.publishedAt),
+          )}
         </Typography>
         <Typography variant="h6" color="text.primary">
           Duration:{" "}
-          {new Date(metadata.duration * 1000).toISOString().substr(11, 8)}
+          {new Date(toSeconds(parse(metadata.contentDetails.duration)) * 1000)
+            .toISOString()
+            .substring(11, 19)}
         </Typography>
       </Box>
       <Box>
-        <Link href={metadata.link} target="_blank">
+        <Link href={videoLink} target="_blank">
           <img
-            src={metadata.thumbnail}
+            src={metadata.snippet.thumbnails.medium.url}
             style={{
               width: mobile ? "100%" : "300px",
               height: "auto",
             }}
-            alt={metadata.title}
+            alt={metadata.snippet.title}
           />
         </Link>
       </Box>

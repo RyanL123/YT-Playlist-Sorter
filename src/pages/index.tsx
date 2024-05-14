@@ -1,13 +1,13 @@
 import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { parse, toSeconds } from "iso8601-duration";
 import React, { useState } from "react";
 import ReactGA from "react-ga4";
 import { Link } from "react-router-dom";
 import Video from "../components/Video";
 import { SortOptions, VideoMetadata } from "../types";
-import { convertISOtoInt } from "../util/dateUtil";
-import { getPlaylist } from "../util/playlistUtil";
+import { findPlaylistById } from "../util/playlistUtil";
 
 ReactGA.initialize("G-LRVNS567ZT");
 ReactGA.send(window.location.pathname + window.location.search);
@@ -17,21 +17,42 @@ function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
   let compFunction = (a: VideoMetadata, b: VideoMetadata) => {
     switch (order) {
       case SortOptions.VIEWS_ASC:
-        return a.views - b.views;
+        return (
+          parseInt(a.statistics.viewCount) - parseInt(b.statistics.viewCount)
+        );
       case SortOptions.VIEWS_DESC:
-        return b.views - a.views;
+        return (
+          parseInt(b.statistics.viewCount) - parseInt(a.statistics.viewCount)
+        );
       case SortOptions.LIKES_ASC:
-        return a.likes - b.likes;
+        return (
+          parseInt(a.statistics.likeCount) - parseInt(b.statistics.likeCount)
+        );
       case SortOptions.LIKES_DESC:
-        return b.likes - a.likes;
+        return (
+          parseInt(b.statistics.likeCount) - parseInt(a.statistics.likeCount)
+        );
       case SortOptions.LEAST_RECENT:
-        return convertISOtoInt(a.uploadDate) - convertISOtoInt(b.uploadDate);
+        return (
+          new Date(a.snippet.publishedAt).getTime() -
+          new Date(b.snippet.publishedAt).getTime()
+        );
       case SortOptions.MOST_RECENT:
-        return convertISOtoInt(b.uploadDate) - convertISOtoInt(a.uploadDate);
+        return (
+          new Date(b.snippet.publishedAt).getTime() -
+          new Date(a.snippet.publishedAt).getTime()
+        );
       case SortOptions.SHORTEST:
-        return a.duration - b.duration;
+        return (
+          toSeconds(parse(a.contentDetails.duration)) -
+          toSeconds(parse(b.contentDetails.duration))
+        );
+
       case SortOptions.LONGEST:
-        return b.duration - a.duration;
+        return (
+          toSeconds(parse(b.contentDetails.duration)) -
+          toSeconds(parse(a.contentDetails.duration))
+        );
       default:
         return 0;
     }
@@ -82,7 +103,7 @@ const SearchPanel = ({
         ? playlistID
         : playlistID.slice(playlistID.indexOf("list=") + "list=".length);
 
-    getPlaylist(sanitizedPlaylistID, "", 1)
+    findPlaylistById(sanitizedPlaylistID, "", 1)
       .then((data) => {
         setPlaylist(data);
         setLoading(false);
