@@ -12,7 +12,7 @@ ReactGA.initialize("G-LRVNS567ZT");
 ReactGA.send(window.location.pathname + window.location.search);
 
 const App = () => {
-  const [order, setOrder] = useState("vd");
+  const [order, setOrder] = useState<SortOptions>(SortOptions.VIEWS_DESC);
   const [playlistID, setPlaylistID] = useState("");
   const [loading, setLoading] = useState(false);
   const [playlist, setPlaylist] = useState<VideoMetadata[]>([]);
@@ -29,9 +29,11 @@ const App = () => {
     setOrder(value); // update global order
     setPlaylist(sortPlaylist(playlist, value)); // resorts the playlist
   };
+
   const updatePlaylistID = (event) => {
     setPlaylistID(event.target.value);
   };
+
   const handleSearch = () => {
     // Google Analytics
     ReactGA.event({
@@ -55,6 +57,7 @@ const App = () => {
       console.log(e);
     }
   };
+
   return (
     <Box bgcolor="background.default" minHeight="100vh">
       <BrowserRouter>

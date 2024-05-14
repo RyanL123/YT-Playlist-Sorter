@@ -7,7 +7,7 @@ import { SortOptions } from "../types";
 
 const Search = (props: {
   playlistID: string;
-  order: string;
+  order: SortOptions;
   loading: boolean;
   updatePlaylistID: any;
   updateSortOrder: any;
