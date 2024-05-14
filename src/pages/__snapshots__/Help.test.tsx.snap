@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="MuiBox-root css-h0arj5"
+>
+  <a
+    className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+    href="/"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+  >
+    <span
+      className="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+    >
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+        data-testid="ArrowBackIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"
+        />
+      </svg>
+    </span>
+    Back
+  </a>
+  <h4
+    className="MuiTypography-root MuiTypography-h4 css-19sbny7-MuiTypography-root"
+  >
+    FAQ
+  </h4>
+  <h5
+    className="MuiTypography-root MuiTypography-h5 css-zy287o-MuiTypography-root"
+  >
+    What is the Playlist ID?
+  </h5>
+  <p
+    className="MuiTypography-root MuiTypography-body1 css-1x3biy5-MuiTypography-root"
+  >
+    The playlist ID is found at the end of a YouTube playlist link, the letters immediately following &list=. Take
+    <a
+      aria-label="Link to Kurzgesagt YouTube playlist"
+      className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+      href="https://www.youtube.com/playlist?list=PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+       
+      this playlist
+       
+    </a>
+    by Kurzgesagt for example: The link is https://www.youtube.com/playlist?list=
+    <b>
+      PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF
+    </b>
+    , and the playlist ID would be the bolded part, 
+    <b>
+      PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF
+    </b>
+    . You can also paste in the entire link. In fact, try sorting it using the sorter!
+  </p>
+  <h5
+    className="MuiTypography-root MuiTypography-h5 css-zy287o-MuiTypography-root"
+  >
+    How do I sort?
+  </h5>
+  <p
+    className="MuiTypography-root MuiTypography-body1 css-1x3biy5-MuiTypography-root"
+  >
+    After typing in the playlist ID into the search bar, simply click search and wait until the playlist loads. The videos are default sorted by most views which can be changed using the dropdown sort options menu. Only a maximum of 200 videos will be sorted due to API limits.
+  </p>
+  <h5
+    className="MuiTypography-root MuiTypography-h5 css-zy287o-MuiTypography-root"
+  >
+    Feature Requests?
+  </h5>
+  <p
+    className="MuiTypography-root MuiTypography-body1 css-1x3biy5-MuiTypography-root"
+  >
+    For now, please submit a issue to
+     
+    <a
+      aria-label="Link to GitHub repository"
+      className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+      href="https://github.com/RyanL123/YT-Playlist-Sorter/issues"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      this repository
+    </a>
+    .
+  </p>
+</div>
+`;

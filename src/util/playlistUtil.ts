@@ -1,5 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getFunctions, httpsCallable } from "firebase/functions";
+import {
+  connectFunctionsEmulator,
+  getFunctions,
+  httpsCallable,
+} from "firebase/functions";
 import type {
   PlaylistItemListResponse,
   VideoListResponse,
@@ -9,7 +13,10 @@ import firebaseConfig from "./firebaseConfig";
 
 const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app);
-// connectFunctionsEmulator(functions, "localhost", 5001);
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  connectFunctionsEmulator(functions, "localhost", 5001);
+}
 
 function findVideoById(videoId): Promise<VideoMetadata | null> {
   const videoFunction = httpsCallable(functions, "video");
