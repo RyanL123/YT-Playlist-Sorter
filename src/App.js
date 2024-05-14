@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Help from "./components/Help";
 import Results from "./components/Results";
 import Search from "./components/Search";
+import { SortOptions } from "./types";
 import { getPlaylist, sortPlaylist } from "./util/playlistUtil";
 
 ReactGA.initialize("G-LRVNS567ZT");
@@ -15,40 +16,7 @@ const App = () => {
   const [playlistID, setPlaylistID] = useState("");
   const [loading, setLoading] = useState(false);
   const [playlist, setPlaylist] = useState([]);
-  const sortOptions = [
-    {
-      value: "vd",
-      label: "Views Descending",
-    },
-    {
-      value: "va",
-      label: "Views Ascending",
-    },
-    {
-      value: "ld",
-      label: "Likes Descending",
-    },
-    {
-      value: "la",
-      label: "Likes Ascending",
-    },
-    {
-      value: "ud",
-      label: "Most Recent",
-    },
-    {
-      value: "ua",
-      label: "Earliest",
-    },
-    {
-      value: "dd",
-      label: "Longest",
-    },
-    {
-      value: "da",
-      label: "Shortest",
-    },
-  ];
+
   const updateSortOrder = (event) => {
     const value = event.target.value;
     // Google Analytics
@@ -96,7 +64,7 @@ const App = () => {
             element={
               <Box>
                 <Search
-                  sortOptions={sortOptions}
+                  sortOptions={Object.keys(SortOptions)}
                   order={order}
                   playlistID={playlistID}
                   updatePlaylistID={(event) => updatePlaylistID(event)}
