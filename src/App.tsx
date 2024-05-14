@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Help from "./components/Help";
 import Results from "./components/Results";
 import Search from "./components/Search";
-import { SortOptions } from "./types";
+import { SortOptions, VideoMetadata } from "./types";
 import { getPlaylist, sortPlaylist } from "./util/playlistUtil";
 
 ReactGA.initialize("G-LRVNS567ZT");
@@ -15,7 +15,7 @@ const App = () => {
   const [order, setOrder] = useState("vd");
   const [playlistID, setPlaylistID] = useState("");
   const [loading, setLoading] = useState(false);
-  const [playlist, setPlaylist] = useState([]);
+  const [playlist, setPlaylist] = useState<VideoMetadata[]>([]);
 
   const updateSortOrder = (event) => {
     const value = event.target.value;
@@ -56,7 +56,7 @@ const App = () => {
     }
   };
   return (
-    <Box backgroundColor="background.default" minHeight="100vh">
+    <Box bgcolor="background.default" minHeight="100vh">
       <BrowserRouter>
         <Routes>
           <Route
@@ -64,7 +64,7 @@ const App = () => {
             element={
               <Box>
                 <Search
-                  sortOptions={Object.keys(SortOptions)}
+                  sortOptions={Object.values(SortOptions)}
                   order={order}
                   playlistID={playlistID}
                   updatePlaylistID={(event) => updatePlaylistID(event)}

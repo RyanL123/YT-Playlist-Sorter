@@ -38,7 +38,7 @@ const Search = (props: {
           >
             {props.sortOptions.map((option) => (
               <MenuItem key={option} value={option.valueOf()}>
-                {SortOptions[option]}
+                {option}
               </MenuItem>
             ))}
           </TextField>
