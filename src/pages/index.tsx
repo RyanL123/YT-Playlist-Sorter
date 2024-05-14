@@ -6,19 +6,48 @@ import ReactGA from "react-ga4";
 import { Link } from "react-router-dom";
 import Video from "../components/Video";
 import { SortOptions, VideoMetadata } from "../types";
-import { getPlaylist, sortPlaylist } from "../util/playlistUtil";
+import { convertISOtoInt } from "../util/dateUtil";
+import { getPlaylist } from "../util/playlistUtil";
 
 ReactGA.initialize("G-LRVNS567ZT");
 ReactGA.send(window.location.pathname + window.location.search);
 
+function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
+  var ret = [...videos]; // make a copy to operate on
+  let compFunction = (a: VideoMetadata, b: VideoMetadata) => {
+    switch (order) {
+      case SortOptions.VIEWS_ASC:
+        return a.views - b.views;
+      case SortOptions.VIEWS_DESC:
+        return b.views - a.views;
+      case SortOptions.LIKES_ASC:
+        return a.likes - b.likes;
+      case SortOptions.LIKES_DESC:
+        return b.likes - a.likes;
+      case SortOptions.LEAST_RECENT:
+        return convertISOtoInt(a.uploadDate) - convertISOtoInt(b.uploadDate);
+      case SortOptions.MOST_RECENT:
+        return convertISOtoInt(b.uploadDate) - convertISOtoInt(a.uploadDate);
+      case SortOptions.SHORTEST:
+        return a.duration - b.duration;
+      case SortOptions.LONGEST:
+        return b.duration - a.duration;
+      default:
+        return 0;
+    }
+  };
+  return ret.sort(compFunction);
+}
+
 const SearchPanel = ({
-  playlist,
   setPlaylist,
+  order,
+  setOrder,
 }: {
-  playlist: VideoMetadata[];
   setPlaylist: React.Dispatch<React.SetStateAction<VideoMetadata[]>>;
+  order: SortOptions;
+  setOrder: React.Dispatch<React.SetStateAction<SortOptions>>;
 }) => {
-  const [order, setOrder] = useState<SortOptions>(SortOptions.VIEWS_DESC);
   const [playlistID, setPlaylistID] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -33,8 +62,7 @@ const SearchPanel = ({
       value: 1,
     });
 
-    setOrder(value); // update global order
-    setPlaylist(sortPlaylist(playlist, value)); // re-sorts the playlist
+    setOrder(value);
   };
 
   const handleSearch = () => {
@@ -54,7 +82,7 @@ const SearchPanel = ({
         ? playlistID
         : playlistID.slice(playlistID.indexOf("list=") + "list=".length);
 
-    getPlaylist(sanitizedPlaylistID, "", order, 1)
+    getPlaylist(sanitizedPlaylistID, "", 1)
       .then((data) => {
         setPlaylist(data);
         setLoading(false);
@@ -129,7 +157,13 @@ const SearchPanel = ({
   );
 };
 
-const Results = ({ playist }: { playist: VideoMetadata[] }) => (
+const Results = ({
+  playist,
+  order,
+}: {
+  playist: VideoMetadata[];
+  order: SortOptions;
+}) => (
   <Box
     display="flex"
     justifyContent="center"
@@ -138,7 +172,7 @@ const Results = ({ playist }: { playist: VideoMetadata[] }) => (
     px="10vw"
     pb="5vh"
   >
-    {playist.map((video, index) => {
+    {sortPlaylist(playist, order).map((video, index) => {
       return <Video metadata={video} key={index}></Video>;
     })}
   </Box>
@@ -146,11 +180,15 @@ const Results = ({ playist }: { playist: VideoMetadata[] }) => (
 
 const Index = () => {
   const [playlist, setPlaylist] = useState<VideoMetadata[]>([]);
-
+  const [order, setOrder] = useState(SortOptions.VIEWS_DESC);
   return (
     <>
-      <SearchPanel playlist={playlist} setPlaylist={setPlaylist} />
-      <Results playist={playlist} />
+      <SearchPanel
+        setPlaylist={setPlaylist}
+        order={order}
+        setOrder={setOrder}
+      />
+      <Results playist={playlist} order={order} />
     </>
   );
 };
