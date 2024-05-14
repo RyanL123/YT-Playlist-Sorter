@@ -35,9 +35,10 @@ const Video = ({ metadata }: { metadata: VideoMetadata }) => {
         </Typography>
         <Typography variant="h6" color="text.primary">
           Upload Date:{" "}
-          {Intl.DateTimeFormat("en", { dateStyle: "long" }).format(
-            new Date(metadata.snippet.publishedAt),
-          )}
+          {Intl.DateTimeFormat("en", {
+            dateStyle: "long",
+            timeZone: "UTC",
+          }).format(new Date(metadata.snippet.publishedAt))}
         </Typography>
         <Typography variant="h6" color="text.primary">
           Duration:{" "}

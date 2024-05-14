@@ -44,7 +44,7 @@ exports[`renders correctly 1`] = `
     >
       Upload Date:
        
-      December 31, 1989
+      January 1, 1990
     </h6>
     <h6
       className="MuiTypography-root MuiTypography-h6 css-1uaewpj-MuiTypography-root"
