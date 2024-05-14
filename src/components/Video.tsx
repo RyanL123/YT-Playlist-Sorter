@@ -1,10 +1,10 @@
 import { Box, Link, useMediaQuery } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { IVideoMetadata } from "../types";
+import { VideoMetadata } from "../types";
 import { convertISOtoString } from "../util/dateUtil";
 
-const Video = ({ metadata }: { metadata: IVideoMetadata }) => {
+const Video = ({ metadata }: { metadata: VideoMetadata }) => {
   const mobile = useMediaQuery("(max-width:1000px)");
   return (
     <Box

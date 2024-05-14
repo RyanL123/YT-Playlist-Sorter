@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import * as React from "react";
-import { IVideoMetadata } from "../types";
+import { VideoMetadata } from "../types";
 import Video from "./Video";
 
-const Results = ({ videos }: { videos: { stats: IVideoMetadata }[] }) => (
+const Results = ({ videos }: { videos: VideoMetadata[] }) => (
   <Box
     display="flex"
     justifyContent="center"
@@ -13,7 +13,7 @@ const Results = ({ videos }: { videos: { stats: IVideoMetadata }[] }) => (
     pb="5vh"
   >
     {videos.map((video, index) => {
-      return <Video metadata={video.stats} key={index}></Video>;
+      return <Video metadata={video} key={index}></Video>;
     })}
   </Box>
 );

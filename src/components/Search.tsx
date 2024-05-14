@@ -1,11 +1,19 @@
 import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, MenuItem, TextField } from "@mui/material";
-import PropTypes from "prop-types";
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
+import { SortOptions } from "../types";
 
-const Search = (props) => (
+const Search = (props: {
+  playlistID: string;
+  order: string;
+  loading: boolean;
+  updatePlaylistID: any;
+  updateSortOrder: any;
+  search: any;
+  sortOptions: SortOptions[];
+}) => (
   <Box display="flex" justifyContent="center" py="5vh" px="10vw">
     <Box display="flex" width="100%" alignItems="center" flexDirection="column">
       <form style={{ width: "100%" }}>
@@ -29,8 +37,8 @@ const Search = (props) => (
             onChange={props.updateSortOrder}
           >
             {props.sortOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+              <MenuItem key={option} value={option.valueOf()}>
+                {SortOptions[option]}
               </MenuItem>
             ))}
           </TextField>
@@ -69,15 +77,5 @@ const Search = (props) => (
     </Box>
   </Box>
 );
-
-Search.propTypes = {
-  playlistID: PropTypes.string,
-  order: PropTypes.string,
-  loading: PropTypes.bool,
-  updatePlaylistID: PropTypes.func,
-  updateSortOrder: PropTypes.func,
-  search: PropTypes.func,
-  sortOptions: PropTypes.array,
-};
 
 export default Search;
