@@ -1,15 +1,65 @@
 /**
- * Represents metadata of a video
+ * @see https://developers.google.com/youtube/v3/docs/videos#resource-representation
  */
 export type VideoMetadata = {
-  link: string;
-  title: string;
-  channel: string;
-  views: number;
-  likes: number;
-  uploadDate: string;
-  duration: number;
-  thumbnail: string;
+  id: string;
+  statistics: {
+    viewCount: string;
+    likeCount: string;
+  };
+  snippet: {
+    publishedAt: string;
+    channelTitle: string;
+    title: string;
+    thumbnails: {
+      medium: {
+        url: string;
+      };
+    };
+  };
+  contentDetails: {
+    duration: string;
+  };
+};
+
+/**
+ * @see https://developers.google.com/youtube/v3/docs/videos/list#response
+ */
+export type VideoListResponse = {
+  kind: "youtube#videoListResponse";
+  nextPageToken: string;
+  prevPageToken: string;
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
+  items: VideoMetadata[];
+};
+
+/**
+ * @see https://developers.google.com/youtube/v3/docs/playlistItems#resource-representation
+ */
+export type PlaylistItem = {
+  kind: "youtube#playlistItem";
+  snippet: {
+    resourceId: {
+      videoId: number;
+    };
+  };
+};
+
+/**
+ * @see https://developers.google.com/youtube/v3/docs/playlistItems/list#response
+ */
+export type PlaylistItemListResponse = {
+  kind: "youtube#playlistItemListResponse";
+  nextPageToken: string;
+  prevPageToken: string;
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
+  items: PlaylistItem[];
 };
 
 export enum SortOptions {
