@@ -1,42 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { parse, toSeconds } from "iso8601-duration";
-import { SortOptions, VideoMetadata } from "../types";
-import { convertISOtoInt } from "./dateUtil";
+import { VideoMetadata } from "../types";
 import firebaseConfig from "./firebaseConfig";
 
 const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app);
 // connectFunctionsEmulator(functions, "localhost", 5001);
-
-export function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
-  var ret = [...videos]; // make a copy to operate on
-  let compFunction = (a: VideoMetadata, b: VideoMetadata) => {
-    switch (order) {
-      case SortOptions.VIEWS_ASC:
-        console.log("VIEWS ASC");
-        return a.views - b.views;
-      case SortOptions.VIEWS_DESC:
-        return b.views - a.views;
-      case SortOptions.LIKES_ASC:
-        return a.likes - b.likes;
-      case SortOptions.LIKES_DESC:
-        return b.likes - a.likes;
-      case SortOptions.LEAST_RECENT:
-        return convertISOtoInt(a.uploadDate) - convertISOtoInt(b.uploadDate);
-      case SortOptions.MOST_RECENT:
-        return convertISOtoInt(b.uploadDate) - convertISOtoInt(a.uploadDate);
-      case SortOptions.SHORTEST:
-        return a.duration - b.duration;
-      case SortOptions.LONGEST:
-        return b.duration - a.duration;
-      default:
-        return 0;
-    }
-  };
-  ret.sort(compFunction);
-  return ret;
-}
 
 /**
  * Returned from the Youtube API from Firebase functions.
@@ -111,7 +81,11 @@ type PlaylistFunctionResponse = {
   };
 };
 
-export async function getPlaylist(playlistID, pageToken, order, count) {
+export async function getPlaylist(
+  playlistID: string,
+  pageToken: string,
+  count: number,
+): Promise<VideoMetadata[]> {
   // 4 pages * 50 videos/page = 200 videos max
   if (count > 4) {
     return [];
@@ -134,17 +108,13 @@ export async function getPlaylist(playlistID, pageToken, order, count) {
       }
       // recursively get next page of data
       if (res.data.nextPageToken) {
-        await getPlaylist(
-          playlistID,
-          res.data.nextPageToken,
-          order,
-          count + 1,
-        ).then((data) => {
-          // append data to current results
-          results = results.concat(data);
-        });
+        await getPlaylist(playlistID, res.data.nextPageToken, count + 1).then(
+          (data) => {
+            // append data to current results
+            results = results.concat(data);
+          },
+        );
       }
-      results = sortPlaylist(results, order);
       return results;
     },
   );
