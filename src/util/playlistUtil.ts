@@ -10,7 +10,7 @@ const functions = getFunctions(app);
 // connectFunctionsEmulator(functions, "localhost", 5001);
 
 export function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
-  var ret = videos;
+  var ret = [...videos]; // make a copy to operate on
   let compFunction = (a: VideoMetadata, b: VideoMetadata) => {
     switch (order) {
       case SortOptions.VIEWS_ASC:
