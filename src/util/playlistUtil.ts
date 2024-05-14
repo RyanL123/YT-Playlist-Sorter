@@ -12,7 +12,7 @@ const functions = getFunctions(app);
 export function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
   var ret = videos;
   let compFunction = (a: VideoMetadata, b: VideoMetadata) => {
-    switch (SortOptions[order]) {
+    switch (order) {
       case SortOptions.VIEWS_ASC:
         console.log("VIEWS ASC");
         return a.views - b.views;

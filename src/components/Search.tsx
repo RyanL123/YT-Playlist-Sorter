@@ -7,7 +7,7 @@ import { SortOptions } from "../types";
 
 const Search = (props: {
   playlistID: string;
-  order: string;
+  order: SortOptions;
   loading: boolean;
   updatePlaylistID: any;
   updateSortOrder: any;
@@ -38,7 +38,7 @@ const Search = (props: {
           >
             {props.sortOptions.map((option) => (
               <MenuItem key={option} value={option.valueOf()}>
-                {SortOptions[option]}
+                {option}
               </MenuItem>
             ))}
           </TextField>
