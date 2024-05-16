@@ -8,16 +8,24 @@ exports.playlist = functions.https.onCall(async (data) => {
   const token = data.token || ""; // make sure token is not undefined
   return await fetch(
     `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails%2Csnippet&maxResults=50&playlistId=${id}&pageToken=${token}&key=${process.env.YOUTUBE_API_KEY}`,
-  ).then((res) => {
-    return res.json();
-  });
+  )
+    .then(async (res) => {
+      const resJson = await res.json();
+      console.log(resJson);
+      return resJson;
+    })
+    .catch((e) => console.log(e));
 });
 
 exports.video = functions.https.onCall(async (data) => {
   const id = data.id;
   return await fetch(
     `https://www.googleapis.com/youtube/v3/videos?part=statistics%2Csnippet%2CcontentDetails&id=${id}&key=${process.env.YOUTUBE_API_KEY}`,
-  ).then((res) => {
-    return res.json();
-  });
+  )
+    .then(async (res) => {
+      const resJson = await res.json();
+      console.log(resJson);
+      return resJson;
+    })
+    .catch((e) => console.log(e));
 });

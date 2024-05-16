@@ -14,7 +14,11 @@ import firebaseConfig from "./firebaseConfig";
 const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app);
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+if (
+  !process.env.NODE_ENV ||
+  process.env.NODE_ENV === "development" ||
+  process.env.NODE_ENV === "test"
+) {
   connectFunctionsEmulator(functions, "localhost", 5001);
 }
 
