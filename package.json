@@ -72,10 +72,18 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "globals": "^15.0.0",
     "jest": "^27.5.1",
+    "msw": "^2.3.0",
     "prettier": "3.2.5",
     "react-test-renderer": "^18.3.1",
     "source-map-loader": "^5.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+[^esm]\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "setupFiles": ["./jest.polyfills.js"]
   }
 }

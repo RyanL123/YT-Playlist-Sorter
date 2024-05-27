@@ -86,7 +86,7 @@ const SearchPanel = ({
     setPlaylist(sortPlaylist(playlist, value));
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     // Google Analytics
     ReactGA.event({
       category: "Search",
