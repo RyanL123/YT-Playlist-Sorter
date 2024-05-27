@@ -62,15 +62,14 @@ function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
 
 const SearchPanel = ({
   setPlaylist,
-  order,
-  setOrder,
+  playlist,
 }: {
   setPlaylist: React.Dispatch<React.SetStateAction<VideoMetadata[]>>;
-  order: SortOptions;
-  setOrder: React.Dispatch<React.SetStateAction<SortOptions>>;
+  playlist: VideoMetadata[];
 }) => {
   const [playlistID, setPlaylistID] = useState("");
   const [loading, setLoading] = useState(false);
+  const [order, setOrder] = useState(SortOptions.VIEWS_DESC);
 
   const updateSortOrder = (event) => {
     const value = event.target.value;
@@ -84,6 +83,7 @@ const SearchPanel = ({
     });
 
     setOrder(value);
+    setPlaylist(sortPlaylist(playlist, value));
   };
 
   const handleSearch = () => {
@@ -105,7 +105,7 @@ const SearchPanel = ({
 
     findPlaylistById(sanitizedPlaylistID, "", 1)
       .then((data) => {
-        setPlaylist(data);
+        setPlaylist(sortPlaylist(data, order));
         setLoading(false);
       })
       .catch((e) => {
@@ -178,13 +178,7 @@ const SearchPanel = ({
   );
 };
 
-const Results = ({
-  playist,
-  order,
-}: {
-  playist: VideoMetadata[];
-  order: SortOptions;
-}) => (
+const Results = ({ playist }: { playist: VideoMetadata[] }) => (
   <Box
     display="flex"
     justifyContent="center"
@@ -193,7 +187,7 @@ const Results = ({
     px="10vw"
     pb="5vh"
   >
-    {sortPlaylist(playist, order).map((video, index) => {
+    {playist.map((video, index) => {
       return <Video metadata={video} key={index}></Video>;
     })}
   </Box>
@@ -201,15 +195,10 @@ const Results = ({
 
 const Index = () => {
   const [playlist, setPlaylist] = useState<VideoMetadata[]>([]);
-  const [order, setOrder] = useState(SortOptions.VIEWS_DESC);
   return (
     <>
-      <SearchPanel
-        setPlaylist={setPlaylist}
-        order={order}
-        setOrder={setOrder}
-      />
-      <Results playist={playlist} order={order} />
+      <SearchPanel setPlaylist={setPlaylist} playlist={playlist} />
+      <Results playist={playlist} />
     </>
   );
 };
