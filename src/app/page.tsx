@@ -108,7 +108,6 @@ const SearchPanel = ({
     findPlaylistById(sanitizedPlaylistID, "", 1)
       .then((data) => {
         setPlaylist(sortPlaylist(data, order));
-        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
