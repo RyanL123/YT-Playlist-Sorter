@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import Help from "./Help";
+import Help from "../../pages/help";
 
 it("renders correctly", () => {
   const component = renderer.create(

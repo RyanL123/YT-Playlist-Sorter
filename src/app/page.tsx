@@ -1,16 +1,18 @@
+"use client";
+
 import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { parse, toSeconds } from "iso8601-duration";
+import Link from "next/link";
 import React, { useState } from "react";
 import ReactGA from "react-ga4";
-import { Link } from "react-router-dom";
 import Video from "../components/Video";
 import { SortOptions, VideoMetadata } from "../types";
 import { findPlaylistById } from "../util/playlistUtil";
 
-ReactGA.initialize("G-LRVNS567ZT");
-ReactGA.send(window.location.pathname + window.location.search);
+// ReacttGA.initialize("G-LRVNS567ZT");
+// ReacGA.send(window.location.pathname + window.location.search);
 
 function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
   var ret = [...videos]; // make a copy to operate on
@@ -163,14 +165,11 @@ const SearchPanel = ({
             >
               Search
             </LoadingButton>
-            <Button
-              variant="outlined"
-              component={Link}
-              to="/help"
-              endIcon={<InfoOutlined />}
-            >
-              Help
-            </Button>
+            <Link href="/help">
+              <Button variant="outlined" endIcon={<InfoOutlined />}>
+                Help
+              </Button>
+            </Link>
           </Box>
         </Box>
       </form>

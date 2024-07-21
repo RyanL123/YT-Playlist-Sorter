@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import Index from "./index";
+import Index from "../pages/index";
 
 it("renders correctly", () => {
   const component = renderer.create(

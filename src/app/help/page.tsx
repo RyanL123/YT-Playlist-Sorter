@@ -1,13 +1,15 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Link as MuiLink, Typography } from "@mui/material";
+import Link from "next/link";
 import * as React from "react";
-import { Link } from "react-router-dom";
 
 const Help = () => (
   <Box py="5vh" px="10vw">
-    <Button variant="text" component={Link} to="/" startIcon={<ArrowBack />}>
-      Back
-    </Button>
+    <Link href="/">
+      <Button variant="text" startIcon={<ArrowBack />}>
+        Back
+      </Button>
+    </Link>
     <Typography
       variant="h4"
       component="h4"
