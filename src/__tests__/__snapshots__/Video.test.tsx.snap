@@ -68,7 +68,7 @@ exports[`renders correctly 1`] = `
         alt="Test"
         src="abc.com"
         style={
-          Object {
+          {
             "height": "auto",
             "width": "300px",
           }

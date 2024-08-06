@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Video from "./Video";
+import Video from "../components/Video";
 
 it("renders correctly", () => {
   const component = renderer.create(
