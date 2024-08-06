@@ -6,7 +6,7 @@ Array [
     className="MuiBox-root css-x6sufn"
   >
     <form
-      data-testid="form"
+      data-testid="searchPanelForm"
       onClick={[Function]}
       onSubmit={[Function]}
       style={

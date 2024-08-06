@@ -119,7 +119,7 @@ const SearchPanel = ({
         style={{ width: "100%" }}
         onClick={handleSearch}
         onSubmit={handleSearch}
-        data-testid="form"
+        data-testid="searchPanelForm"
       >
         <Box
           display="flex"
