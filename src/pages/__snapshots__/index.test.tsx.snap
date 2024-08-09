@@ -7,7 +7,6 @@ Array [
   >
     <form
       data-testid="searchPanelForm"
-      onClick={[Function]}
       onSubmit={[Function]}
       style={
         Object {

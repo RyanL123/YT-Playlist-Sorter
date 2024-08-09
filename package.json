@@ -77,11 +77,5 @@
     "source-map-loader": "^5.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5"
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+[^esm]\\.(js|jsx|mjs|cjs|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ]
   }
 }
