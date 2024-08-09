@@ -43,7 +43,7 @@ export type PlaylistItem = {
   kind: "youtube#playlistItem";
   snippet: {
     resourceId: {
-      videoId: number;
+      videoId: string;
     };
   };
 };
