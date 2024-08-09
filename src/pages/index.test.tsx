@@ -5,73 +5,72 @@ import { BrowserRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
 import Index from "./index";
 import "@testing-library/jest-dom/extend-expect";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
-import type {
-  PlaylistItemListResponse,
-  VideoListResponse,
-  VideoMetadata,
-} from "../types";
+import type { VideoMetadata } from "../types";
 import { findPlaylistById } from "../util/playlistUtil";
 
-// const handlers = [
-//   // By calling "http.get()" we're instructing MSW
-//   // to capture all outgoing "GET /posts" requests
-//   // and execute the given response resolver when they
-//   // happen.
-//   http.get(
-//     "http://127.0.0.1:5001/playlist-view-sorter/us-central1/playlist",
-//     () => {
-//       // Response resolver allows you to react to captured requests,
-//       // respond with mock responses or passthrough requests entirely.
-//       // For now, let's just print a message to the console.
-//       console.log('Captured a "GET /posts" request');
-//       const resp: PlaylistItemListResponse = {
-//         kind: "youtube#playlistItemListResponse",
-//         nextPageToken: "",
-//         prevPageToken: "",
-//         pageInfo: {
-//           totalResults: 1,
-//           resultsPerPage: 1,
-//         },
-//         items: [
-//           {
-//             kind: "youtube#playlistItem",
-//             snippet: {
-//               resourceId: {
-//                 videoId: "abc",
-//               },
-//             },
-//           },
-//         ],
-//       };
-//       return HttpResponse.json(resp);
-//     },
-//   ),
-// ];
+const mockPlaylist1: VideoMetadata[] = [
+  {
+    id: "abc",
+    statistics: {
+      viewCount: "1",
+      likeCount: "1",
+    },
+    snippet: {
+      publishedAt: "2000/01/01",
+      channelTitle: "Channel1",
+      title: "Video1",
+      thumbnails: {
+        medium: {
+          url: "google.com",
+        },
+      },
+    },
+    contentDetails: {
+      duration: "PT10S",
+    },
+  },
+];
 
-// const server = setupServer(...handlers);
+const mockPlaylist2: VideoMetadata[] = [
+  {
+    id: "abc",
+    statistics: {
+      viewCount: "1",
+      likeCount: "1",
+    },
+    snippet: {
+      publishedAt: "2000/01/01",
+      channelTitle: "Channel1",
+      title: "Video2",
+      thumbnails: {
+        medium: {
+          url: "google.com",
+        },
+      },
+    },
+    contentDetails: {
+      duration: "PT10S",
+    },
+  },
+];
 
-// beforeAll(() => server.listen());
-// afterEach(() => server.resetHandlers());
-// afterAll(() => server.close());
-
-// const test = () => {
-//   return new Promise<VideoMetadata[]>((resolve) => {
-//     resolve([]);
-//   });
-// };
-
-// jest.mock("../util/playlistUtil", () => {
-//   const originalModule = jest.requireActual("../util/playlistUtil");
-
-//   //Mock the default export and named export 'foo'
-//   return {
-//     __esModule: true,
-//     ...originalModule,
-//     findPlaylistById: test,
-//   };
-// });
+jest.mock("../util/playlistUtil", () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual("../util/playlistUtil"),
+    findPlaylistById: (
+      playlistId: string,
+      pageToken: string,
+      pageCount: number,
+    ) => {
+      if (playlistId === "video1") {
+        return Promise.resolve(mockPlaylist1);
+      } else {
+        return Promise.resolve(mockPlaylist2);
+      }
+    },
+  };
+});
 
 it("renders correctly", async () => {
   const component = renderer.create(
@@ -92,7 +91,7 @@ it("renders correctly", async () => {
 
   const playlistIdInput = screen.getByTestId("playlistIdInput");
   await user.click(playlistIdInput);
-  await user.keyboard("PLFs4vir_WsTwEd-nJgVJCZPNL3HALHHpF");
+  await user.keyboard("video1");
 
   const form = screen.getByTestId("searchPanelForm");
   fireEvent.submit(form);
@@ -100,11 +99,27 @@ it("renders correctly", async () => {
   await waitFor(
     async () => {
       expect(
-        await screen.findAllByText("Kurzgesagt", { exact: false }),
+        await screen.findAllByText("Video1", { exact: false }),
       ).toBeDefined();
     },
     {
-      timeout: 10000,
+      timeout: 5000,
+    },
+  );
+
+  await user.click(playlistIdInput);
+  await user.keyboard("video2");
+
+  fireEvent.submit(form);
+
+  await waitFor(
+    async () => {
+      expect(
+        await screen.findAllByText("Video2", { exact: false }),
+      ).toBeDefined();
+    },
+    {
+      timeout: 5000,
     },
   );
 }, 20000);
