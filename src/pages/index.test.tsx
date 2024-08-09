@@ -5,11 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
 import Index from "./index";
 import "@testing-library/jest-dom/extend-expect";
-import type { VideoMetadata } from "../types";
-import { findPlaylistById } from "../util/playlistUtil";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import type {
+  PlaylistItemListResponse,
+  VideoListResponse,
+  VideoMetadata,
+} from "../types";
 
-const mockPlaylist1: VideoMetadata[] = [
-  {
+const mockVideosById: Record<string, VideoMetadata> = {
+  abc: {
     id: "abc",
     statistics: {
       viewCount: "1",
@@ -17,11 +21,11 @@ const mockPlaylist1: VideoMetadata[] = [
     },
     snippet: {
       publishedAt: "2000/01/01",
-      channelTitle: "Channel1",
+      channelTitle: "A",
       title: "Video1",
       thumbnails: {
         medium: {
-          url: "google.com",
+          url: "abc.com",
         },
       },
     },
@@ -29,10 +33,7 @@ const mockPlaylist1: VideoMetadata[] = [
       duration: "PT10S",
     },
   },
-];
-
-const mockPlaylist2: VideoMetadata[] = [
-  {
+  def: {
     id: "abc",
     statistics: {
       viewCount: "1",
@@ -40,11 +41,11 @@ const mockPlaylist2: VideoMetadata[] = [
     },
     snippet: {
       publishedAt: "2000/01/01",
-      channelTitle: "Channel1",
+      channelTitle: "A",
       title: "Video2",
       thumbnails: {
         medium: {
-          url: "google.com",
+          url: "abc.com",
         },
       },
     },
@@ -52,21 +53,77 @@ const mockPlaylist2: VideoMetadata[] = [
       duration: "PT10S",
     },
   },
-];
+};
 
-jest.mock("../util/playlistUtil", () => {
+const mockPlaylistsById: Record<string, PlaylistItemListResponse> = {
+  playlist1: {
+    kind: "youtube#playlistItemListResponse",
+    nextPageToken: "",
+    prevPageToken: "",
+    pageInfo: {
+      totalResults: 1,
+      resultsPerPage: 1,
+    },
+    items: [
+      {
+        kind: "youtube#playlistItem",
+        snippet: {
+          resourceId: {
+            videoId: "abc",
+          },
+        },
+      },
+    ],
+  },
+  playlist2: {
+    kind: "youtube#playlistItemListResponse",
+    nextPageToken: "",
+    prevPageToken: "",
+    pageInfo: {
+      totalResults: 1,
+      resultsPerPage: 1,
+    },
+    items: [
+      {
+        kind: "youtube#playlistItem",
+        snippet: {
+          resourceId: {
+            videoId: "def",
+          },
+        },
+      },
+    ],
+  },
+};
+
+const mockVideoFunction = ({ id }): { data: VideoListResponse } => {
+  return {
+    data: {
+      kind: "youtube#videoListResponse",
+      nextPageToken: "",
+      prevPageToken: "",
+      pageInfo: {
+        totalResults: 1,
+        resultsPerPage: 1,
+      },
+      items: [mockVideosById[id]],
+    },
+  };
+};
+
+const mockPlaylistFunction = ({ id }): { data: PlaylistItemListResponse } => {
+  return { data: mockPlaylistsById[id] };
+};
+
+jest.mock("firebase/functions", () => {
   return {
     __esModule: true,
-    ...jest.requireActual("../util/playlistUtil"),
-    findPlaylistById: (
-      playlistId: string,
-      pageToken: string,
-      pageCount: number,
-    ) => {
-      if (playlistId === "video1") {
-        return Promise.resolve(mockPlaylist1);
-      } else {
-        return Promise.resolve(mockPlaylist2);
+    ...jest.requireActual("firebase/functions"),
+    httpsCallable: (_, name) => {
+      if (name === "video") {
+        return mockVideoFunction;
+      } else if (name === "playlist") {
+        return mockPlaylistFunction;
       }
     },
   };
@@ -91,7 +148,7 @@ it("renders correctly", async () => {
 
   const playlistIdInput = screen.getByTestId("playlistIdInput");
   await user.click(playlistIdInput);
-  await user.keyboard("video1");
+  await user.keyboard("playlist1");
 
   const form = screen.getByTestId("searchPanelForm");
   fireEvent.submit(form);
@@ -107,8 +164,9 @@ it("renders correctly", async () => {
     },
   );
 
+  await user.clear(playlistIdInput);
   await user.click(playlistIdInput);
-  await user.keyboard("video2");
+  await user.keyboard("playlist2");
 
   fireEvent.submit(form);
 
