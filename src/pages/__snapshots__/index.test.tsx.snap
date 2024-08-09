@@ -6,6 +6,8 @@ Array [
     className="MuiBox-root css-x6sufn"
   >
     <form
+      data-testid="searchPanelForm"
+      onSubmit={[Function]}
       style={
         Object {
           "width": "100%",
@@ -34,6 +36,7 @@ Array [
               aria-invalid={false}
               autoFocus={false}
               className="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+              data-testid="playlistIdInput"
               disabled={false}
               id=":r0:"
               name="playlistID"

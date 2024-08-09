@@ -86,7 +86,7 @@ const SearchPanel = ({
     setPlaylist(sortPlaylist(playlist, value));
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     // Google Analytics
     ReactGA.event({
       category: "Search",
@@ -115,7 +115,11 @@ const SearchPanel = ({
 
   return (
     <Box display="flex" justifyContent="center" py="5vh" px="10vw">
-      <form style={{ width: "100%" }}>
+      <form
+        style={{ width: "100%" }}
+        onSubmit={handleSearch}
+        data-testid="searchPanelForm"
+      >
         <Box
           display="flex"
           width="100%"
@@ -130,6 +134,7 @@ const SearchPanel = ({
             name="playlistID"
             value={playlistID}
             onChange={(event) => setPlaylistID(event.target.value)}
+            inputProps={{ "data-testid": "playlistIdInput" }}
           />
           <TextField
             select
