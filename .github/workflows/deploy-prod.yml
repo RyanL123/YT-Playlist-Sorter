@@ -1,4 +1,4 @@
-name: Deploy to Live Channel
+name: Deploy to PROD
 
 on:
   push:
@@ -7,6 +7,9 @@ on:
     paths:
       - "src/**"
       - "package.json"
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
 
 jobs:
   deploy_live_website:
