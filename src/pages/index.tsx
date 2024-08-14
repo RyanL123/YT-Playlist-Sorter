@@ -1,12 +1,19 @@
 import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { initializeApp } from "firebase/app";
+import {
+  connectFunctionsEmulator,
+  getFunctions,
+  httpsCallable,
+} from "firebase/functions";
 import { parse, toSeconds } from "iso8601-duration";
 import React, { useState } from "react";
 import ReactGA from "react-ga4";
 import { Link } from "react-router-dom";
 import Video from "../components/Video";
 import { SortOptions, VideoMetadata } from "../types";
+import firebaseConfig from "../util/firebaseConfig";
 import { findPlaylistById } from "../util/playlistUtil";
 
 ReactGA.initialize("G-LRVNS567ZT");
@@ -60,6 +67,7 @@ function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
   return ret.sort(compFunction);
 }
 
+
 const SearchPanel = ({
   setPlaylist,
   playlist,
@@ -103,7 +111,7 @@ const SearchPanel = ({
         ? playlistID
         : playlistID.slice(playlistID.indexOf("list=") + "list=".length);
 
-    findPlaylistById(sanitizedPlaylistID, "", 1)
+    findPlaylistById(sanitizedPlaylistID)
       .then((data) => {
         setPlaylist(sortPlaylist(data, order));
       })
