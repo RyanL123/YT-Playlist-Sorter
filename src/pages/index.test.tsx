@@ -6,14 +6,10 @@ import renderer from "react-test-renderer";
 import Index from "./index";
 import "@testing-library/jest-dom/extend-expect";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import type {
-  PlaylistItemListResponse,
-  VideoListResponse,
-  VideoMetadata,
-} from "../types";
+import type { VideoMetadata } from "../types";
 
-const mockVideosById: Record<string, VideoMetadata> = {
-  abc: {
+const mockVideosByPlaylistId: Record<string, VideoMetadata> = {
+  playlist1: {
     id: "abc",
     statistics: {
       viewCount: "1",
@@ -33,7 +29,7 @@ const mockVideosById: Record<string, VideoMetadata> = {
       duration: "PT10S",
     },
   },
-  def: {
+  playlist2: {
     id: "abc",
     statistics: {
       viewCount: "1",
@@ -55,64 +51,14 @@ const mockVideosById: Record<string, VideoMetadata> = {
   },
 };
 
-const mockPlaylistsById: Record<string, PlaylistItemListResponse> = {
-  playlist1: {
-    kind: "youtube#playlistItemListResponse",
-    nextPageToken: "",
-    prevPageToken: "",
-    pageInfo: {
-      totalResults: 1,
-      resultsPerPage: 1,
-    },
-    items: [
-      {
-        kind: "youtube#playlistItem",
-        snippet: {
-          resourceId: {
-            videoId: "abc",
-          },
-        },
-      },
-    ],
-  },
-  playlist2: {
-    kind: "youtube#playlistItemListResponse",
-    nextPageToken: "",
-    prevPageToken: "",
-    pageInfo: {
-      totalResults: 1,
-      resultsPerPage: 1,
-    },
-    items: [
-      {
-        kind: "youtube#playlistItem",
-        snippet: {
-          resourceId: {
-            videoId: "def",
-          },
-        },
-      },
-    ],
-  },
-};
-
-const mockVideoFunction = ({ id }): { data: VideoListResponse } => {
+const mockPlaylistFunction = ({
+  id,
+}): { data: { videos: VideoMetadata[] } } => {
   return {
     data: {
-      kind: "youtube#videoListResponse",
-      nextPageToken: "",
-      prevPageToken: "",
-      pageInfo: {
-        totalResults: 1,
-        resultsPerPage: 1,
-      },
-      items: [mockVideosById[id]],
+      videos: [mockVideosByPlaylistId[id]],
     },
   };
-};
-
-const mockPlaylistFunction = ({ id }): { data: PlaylistItemListResponse } => {
-  return { data: mockPlaylistsById[id] };
 };
 
 jest.mock("firebase/functions", () => {
@@ -120,9 +66,7 @@ jest.mock("firebase/functions", () => {
     __esModule: true,
     ...jest.requireActual("firebase/functions"),
     httpsCallable: (_, name) => {
-      if (name === "video") {
-        return mockVideoFunction;
-      } else if (name === "playlist") {
+      if (name === "getVideosFromPlaylist") {
         return mockPlaylistFunction;
       }
     },

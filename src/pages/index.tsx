@@ -103,7 +103,7 @@ const SearchPanel = ({
         ? playlistID
         : playlistID.slice(playlistID.indexOf("list=") + "list=".length);
 
-    findPlaylistById(sanitizedPlaylistID, "", 1)
+    findPlaylistById(sanitizedPlaylistID)
       .then((data) => {
         setPlaylist(sortPlaylist(data, order));
       })

@@ -22,46 +22,6 @@ export type VideoMetadata = {
   };
 };
 
-/**
- * @see https://developers.google.com/youtube/v3/docs/videos/list#response
- */
-export type VideoListResponse = {
-  kind: "youtube#videoListResponse";
-  nextPageToken: string;
-  prevPageToken: string;
-  pageInfo: {
-    totalResults: number;
-    resultsPerPage: number;
-  };
-  items: VideoMetadata[];
-};
-
-/**
- * @see https://developers.google.com/youtube/v3/docs/playlistItems#resource-representation
- */
-export type PlaylistItem = {
-  kind: "youtube#playlistItem";
-  snippet: {
-    resourceId: {
-      videoId: string;
-    };
-  };
-};
-
-/**
- * @see https://developers.google.com/youtube/v3/docs/playlistItems/list#response
- */
-export type PlaylistItemListResponse = {
-  kind: "youtube#playlistItemListResponse";
-  nextPageToken: string;
-  prevPageToken: string;
-  pageInfo: {
-    totalResults: number;
-    resultsPerPage: number;
-  };
-  items: PlaylistItem[];
-};
-
 export enum SortOptions {
   VIEWS_DESC = "Views Descending",
   VIEWS_ASC = "Views Ascending",
