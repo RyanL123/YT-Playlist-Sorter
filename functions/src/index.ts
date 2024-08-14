@@ -15,22 +15,15 @@ export const getVideosFromPlaylist = onCall(async (request) => {
     maxResults: 50,
   });
 
-  const dataItems = playlist?.data?.items ?? [];
+  const videoIds = playlist?.data?.items
+    ?.map((playlistItem) => playlistItem.snippet?.resourceId?.videoId ?? "")
+    .filter((id) => id !== "");
 
-  let videos = await Promise.all(
-    dataItems.map((playlistItem) => {
-      const videoId = playlistItem.snippet?.resourceId?.videoId ?? "";
-      return youtubeClient.videos.list({
-        part: ["statistics", "snippet", "contentDetails"],
-        id: [videoId],
-      });
-    }),
-  );
+  const videos = await youtubeClient.videos.list({
+    part: ["statistics", "snippet", "contentDetails"],
+    id: videoIds,
+  });
 
-  let filteredVideos = videos
-    .map((video) => video?.data?.items?.[0])
-    .filter((video) => video != undefined);
-
-  logger.debug(filteredVideos);
-  return { videos: filteredVideos };
+  logger.debug(videos.data.items);
+  return { videos: videos.data.items };
 });
