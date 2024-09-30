@@ -18,7 +18,7 @@ if (
   connectFunctionsEmulator(functions, "localhost", 5001);
 }
 
-export async function findPlaylistById(
+export async function findVideosByPlaylistId(
   playlistId: string,
 ): Promise<VideoMetadata[]> {
   const getVideosFromPlaylist = httpsCallable(
@@ -26,6 +26,16 @@ export async function findPlaylistById(
     "getVideosFromPlaylist",
   );
   const data = (await getVideosFromPlaylist({ id: playlistId })).data as {
+    videos: VideoMetadata[];
+  };
+  return data.videos;
+}
+
+export async function findVideosByChannelId(
+  channelId: string,
+): Promise<VideoMetadata[]> {
+  const getVideosFromChannel = httpsCallable(functions, "getVideosFromChannel");
+  const data = (await getVideosFromChannel({ id: channelId })).data as {
     videos: VideoMetadata[];
   };
   return data.videos;

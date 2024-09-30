@@ -32,3 +32,8 @@ export enum SortOptions {
   LONGEST = "Longest",
   SHORTEST = "Shortest",
 }
+
+export enum IdType {
+  PLAYLIST = "Playlist",
+  CHANNEL = "Channel",
+}

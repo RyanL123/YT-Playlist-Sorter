@@ -29,10 +29,14 @@ export const getVideosFromPlaylist = onCall(async (request) => {
 });
 
 export const getVideosFromChannel = onCall(async (request) => {
-  const channelId = request.data.id;
+  const channelHandle = request.data.id;
+  const channels = await youtubeClient.channels.list({
+    forHandle: channelHandle,
+    part: ["snippet"],
+  });
   const channelVideos = await youtubeClient.search.list({
-    channelId: channelId,
-    part: ["contentDetails", "snippet"],
+    channelId: channels.data?.items?.[0]?.id ?? "",
+    part: ["snippet"],
     maxResults: 50,
   });
 

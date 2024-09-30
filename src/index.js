@@ -17,8 +17,8 @@ const theme = createTheme({
 const root = createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <CssBaseline enableColorScheme />
     <ThemeProvider theme={theme}>
+      <CssBaseline enableColorScheme />
       <App />
     </ThemeProvider>
   </React.StrictMode>,

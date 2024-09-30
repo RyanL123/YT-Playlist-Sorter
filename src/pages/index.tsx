@@ -1,13 +1,26 @@
 import { InfoOutlined, Search as SearchIcon } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
 import { parse, toSeconds } from "iso8601-duration";
 import React, { useState } from "react";
 import ReactGA from "react-ga4";
 import { Link } from "react-router-dom";
 import Video from "../components/Video";
-import { SortOptions, VideoMetadata } from "../types";
-import { findPlaylistById } from "../util/playlistUtil";
+import { IdType, SortOptions, VideoMetadata } from "../types";
+import {
+  findVideosByChannelId,
+  findVideosByPlaylistId,
+} from "../util/playlistUtil";
 
 ReactGA.initialize("G-LRVNS567ZT");
 ReactGA.send(window.location.pathname + window.location.search);
@@ -60,6 +73,11 @@ function sortPlaylist(videos: VideoMetadata[], order: SortOptions) {
   return ret.sort(compFunction);
 }
 
+const placeholderTextByIdType = {
+  [IdType.PLAYLIST]: "Playlist ID or Link",
+  [IdType.CHANNEL]: "Channel Handle (e.g. @Apple)",
+};
+
 const SearchPanel = ({
   setPlaylist,
   playlist,
@@ -70,6 +88,7 @@ const SearchPanel = ({
   const [playlistID, setPlaylistID] = useState("");
   const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState(SortOptions.VIEWS_DESC);
+  const [idType, setIdType] = useState(IdType.PLAYLIST);
 
   const updateSortOrder = (event) => {
     const value = event.target.value;
@@ -96,14 +115,28 @@ const SearchPanel = ({
 
     setLoading(true);
 
-    // extracts playlist ID from a complete link
-    // if ?list= doesn't exist, assume user pasted in only the ID
-    const sanitizedPlaylistID =
-      playlistID.indexOf("list=") === -1
-        ? playlistID
-        : playlistID.slice(playlistID.indexOf("list=") + "list=".length);
+    let videoData;
 
-    findPlaylistById(sanitizedPlaylistID)
+    switch (idType) {
+      case IdType.CHANNEL:
+        const sanitizedChannelName = playlistID.replace(
+          new RegExp("@", "g"), // remove all instances of "@"
+          "",
+        );
+        videoData = findVideosByChannelId(sanitizedChannelName);
+        break;
+      case IdType.PLAYLIST:
+        // extracts playlist ID from a complete link
+        // if ?list= doesn't exist, assume user pasted in only the ID
+        const sanitizedPlaylistID =
+          playlistID.indexOf("list=") === -1
+            ? playlistID
+            : playlistID.slice(playlistID.indexOf("list=") + "list=".length);
+        videoData = findVideosByPlaylistId(sanitizedPlaylistID);
+        break;
+    }
+
+    videoData
       .then((data) => {
         setPlaylist(sortPlaylist(data, order));
       })
@@ -130,7 +163,7 @@ const SearchPanel = ({
           <TextField
             fullWidth
             variant="outlined"
-            label="Playlist ID or Link"
+            label={placeholderTextByIdType[idType]}
             name="playlistID"
             value={playlistID}
             onChange={(event) => setPlaylistID(event.target.value)}
@@ -150,6 +183,27 @@ const SearchPanel = ({
               </MenuItem>
             ))}
           </TextField>
+          <Box width="100%">
+            <FormControl>
+              <FormLabel>Type</FormLabel>
+              <RadioGroup
+                row
+                value={idType}
+                onChange={(e) => setIdType(e.target.value as IdType)}
+              >
+                <FormControlLabel
+                  value={IdType.PLAYLIST}
+                  control={<Radio />}
+                  label={IdType.PLAYLIST.toString()}
+                />
+                <FormControlLabel
+                  value={IdType.CHANNEL}
+                  control={<Radio />}
+                  label={IdType.CHANNEL.toString()}
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
           <Box
             mt="20px"
             display="flex"
