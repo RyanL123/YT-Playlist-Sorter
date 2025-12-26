@@ -1,5 +1,4 @@
 import { youtube } from "@googleapis/youtube";
-import * as logger from "firebase-functions/logger";
 import { onCall } from "firebase-functions/v2/https";
 
 const youtubeClient = youtube({
@@ -7,24 +6,25 @@ const youtubeClient = youtube({
   version: "v3",
 });
 
-const MAX_VIDEOS_LIMIT = 500;
+const MAX_VIDEOS_LIMIT = 200;
 
-export const getVideosFromPlaylist = onCall(async (request) => {
-  const playlistId = request.data.id;
-
+async function getVideosFromPlaylistImpl(
+  playlistId: string,
+  limit: number = MAX_VIDEOS_LIMIT,
+) {
   let allVideos = [];
-  let pageToken = "";
+  let pageToken: string | undefined;
 
-  while (allVideos.length < MAX_VIDEOS_LIMIT) {
-    const playlist = await youtubeClient.playlistItems.list({
-      playlistId: playlistId,
-      part: ["contentDetails", "snippet"],
+  do {
+    const playlistItems = await youtubeClient.playlistItems.list({
+      playlistId,
+      pageToken,
+      part: ["snippet"],
       maxResults: 50,
-      pageToken: pageToken,
     });
 
-    const videoIds = playlist?.data?.items
-      ?.map((playlistItem) => playlistItem.snippet?.resourceId?.videoId ?? "")
+    const videoIds = playlistItems?.data?.items
+      ?.map((item) => item.snippet?.resourceId?.videoId ?? "")
       .filter((id) => id !== "");
 
     const videos = await youtubeClient.videos.list({
@@ -33,52 +33,30 @@ export const getVideosFromPlaylist = onCall(async (request) => {
     });
 
     allVideos.push(...(videos.data?.items ?? []));
+    pageToken = playlistItems.data?.nextPageToken ?? "";
+  } while (pageToken && allVideos.length < limit);
 
-    pageToken = playlist.data?.nextPageToken ?? "";
-    if (!pageToken) {
-      break;
-    }
-  }
+  return allVideos;
+}
 
-  logger.debug(allVideos);
-  return { videos: allVideos };
+export const getVideosFromPlaylist = onCall(async (request) => {
+  const playlistId = request.data.id;
+  return { videos: await getVideosFromPlaylistImpl(playlistId) };
 });
 
 export const getVideosFromChannel = onCall(async (request) => {
   const channelHandle = request.data.id;
   const channels = await youtubeClient.channels.list({
     forHandle: channelHandle,
-    part: ["snippet"],
+    part: ["contentDetails"],
   });
+  const uploadsPlaylistId =
+    channels.data.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
 
-  let allVideos = [];
-  let pageToken = "";
-
-  while (allVideos.length < MAX_VIDEOS_LIMIT) {
-    const channelVideos = await youtubeClient.search.list({
-      channelId: channels.data?.items?.[0]?.id ?? "",
-      part: ["snippet"],
-      maxResults: 50,
-      pageToken: pageToken,
-    });
-
-    const videoIds = channelVideos?.data?.items
-      ?.map((videoItem) => videoItem.id?.videoId ?? "")
-      .filter((id) => id !== "");
-
-    const videos = await youtubeClient.videos.list({
-      part: ["statistics", "snippet", "contentDetails"],
-      id: videoIds,
-    });
-
-    allVideos.push(...(videos.data?.items ?? []));
-
-    pageToken = channelVideos.data?.nextPageToken ?? "";
-    if (!pageToken) {
-      break;
-    }
+  let videos = null;
+  if (uploadsPlaylistId) {
+    videos = await getVideosFromPlaylistImpl(uploadsPlaylistId);
   }
 
-  logger.debug(allVideos);
-  return { videos: allVideos };
+  return { videos };
 });
